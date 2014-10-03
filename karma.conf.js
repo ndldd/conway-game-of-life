@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Fri Oct 03 2014 12:59:42 GMT+0200 (CEST)
+// Generated on Fri Oct 03 2014 20:32:38 GMT+0200 (CEST)
 
 module.exports = function(config) {
   config.set({
@@ -15,14 +15,13 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'js/*.js',
-      'test/**/*Spec.js'
+      'js/**/*.js',
+      'test/**/*.spec.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-      '**/*.swp'
     ],
 
 
@@ -57,10 +56,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-
-    browsers: ['Chrome', 'Firefox', ],
     browsers: ['Chrome'],
-    //export CHROME_BIN=/usr/bin/chromium-browser
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

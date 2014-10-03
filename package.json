@@ -1,0 +1,29 @@
+{
+  "name": "oop",
+  "version": "0.0.0",
+  "description": "HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.",
+  "main": "karma.conf.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "dependencies": {
+    "karma": "~0.12.24",
+    "karma-chrome-launcher": "~0.1.5",
+    "karma-jasmine": "~0.2.2",
+    "package.json": "~0.0.0"
+  },
+  "devDependencies": {
+    "karma": "~0.12.24",
+    "karma-jasmine": "~0.2.2"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:ndldd/oop.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}
