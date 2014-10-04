@@ -11,26 +11,7 @@ describe('Board', function () {
 
     var sumBoard;
     beforeEach(function () {
-//        jasmine.addMatchers({
-//            toEqualArray: function () {
-//                var s = typeof this.actual,
-//                    result = false;
-//                if (s === 'object') {
-//                    if (this.actual) {
-//                        if (Object.prototype.toString.call(this.actual) === Object.prototype.toString.call([])) { //'[object Array]'
-//                            result = true;
-//                        }
-//                    }
-//                }
-//                this.message = function () {
-//                    if (result) {
-//                        return "Is Array";
-//                    }
-//                    return "Is not an Array";
-//                };
-//                return result;
-//            }
-//        });
+
         sumBoard = function (board) {
 
             var flattened = board.reduce(function (a, b) {
@@ -42,21 +23,7 @@ describe('Board', function () {
         };
     });
 
-//    beforeEach(function () {
-//        jasmine.addMatchers({
-//            hasBoardSum: function () {
-//                return {
-//                    compare: function (actual, expected) {
-//                        return {
-//                            pass: 1 > 0
-//
-//                        };
-//                    }
-//                };
-//            }
-//        });
-//
-//    });
+
 
     var board;
 
@@ -65,9 +32,7 @@ describe('Board', function () {
         board = new Board(44, 44);
     });
     it('calculate returns zero', function () {
-//        expect(toEqualArray(0, 0));
 
-//        console.log(board.board);
     })
 
 
