@@ -252,47 +252,121 @@ describe('Board', function () {
             expect(board.getNeighbours(0, 0)).toEqual([]);
         })
 
-        it ('return undefined if the position is not on the board', function(){
+        it('return undefined if the position is not on the board', function () {
 
-             board = new Board(0,0);
-            expect(board.getNeighbours(0,0)).toBe(undefined);
-            expect(board.getNeighbours(0,1)).toBe(undefined);
-            expect(board.getNeighbours(1,0)).toBe(undefined);
-            expect(board.getNeighbours(-1,0)).toBe(undefined);
+            board = new Board(0, 0);
+            expect(board.getNeighbours(0, 0)).toBe(undefined);
+            expect(board.getNeighbours(0, 1)).toBe(undefined);
+            expect(board.getNeighbours(1, 0)).toBe(undefined);
+            expect(board.getNeighbours(-1, 0)).toBe(undefined);
 
         });
+
 
         it("return [] for small boards", function () {
             board = new Board(1, 1);
             expect(board.getNeighbours(0, 0)).toEqual([]);
         });
-        it("return [0] only one neighbour right", function () {
-            board = new Board(1, 2);
-            expect(board.getNeighbours(0, 0)).toEqual([0]);
+
+        describe('cases with one neighbour', function () {
+
+            it(" to the right", function () {
+                board.board = [
+                    [1, 2]
+                ];
+                expect(board.getNeighbours(0, 0)).toEqual([2]);
+            });
+
+            it(' below', function () {
+                board.board = [
+                    [1],
+                    [2]
+                ];
+                expect(board.getNeighbours(0, 0)).toEqual([2]);
+            });
+            it("on the top", function () {
+                board.board = [
+                    [1],
+                    [2]
+                ];
+                expect(board.getNeighbours(1, 0)).toEqual([1]);
+            });
+            it("on the left", function () {
+                board.board = [
+                    [1, 2]
+                ];
+                expect(board.getNeighbours(0, 1)).toEqual([1]);
+            });
+
         });
 
-        it ('return [0] if one neigbhour below', function(){
-            board = new Board(2,1);
-            expect(board.getNeighbours(0,0)).toEqual([0]);
-        });
+        describe("cases with three neighbours", function () {
 
-        it("returns [0,0,0]  for three neighbours right and below", function () {
-            board = new Board(2,2);
-            expect (board.getNeighbours(0,0)).toEqual([0,0,0]);
-        });
-        it("returns [0,0,0]  for three neighbours left and top", function () {
-            board = new Board(2,2);
-            expect (board.getNeighbours(1,1)).toEqual([0,0,0]);
-        });
-        it("returns [0]  for neighbour on the left", function () {
-                board = new Board(1,2);
-            expect (board.getNeighbours(0,1)).toEqual([0]);
-        });
-        it("returns [0]  for neighbour on the top", function () {
-                board = new Board(2,1);
-            expect (board.getNeighbours(1,0)).toEqual([0]);
-        });
+            beforeEach(function () {
+                board.board = [
+                    [1, 2],
+                    [3, 4]
+                ];
+            });
+            it(" to the top right", function () {
+                expect(board.getNeighbours(1, 0)).toEqual([1, 2, 4]);
+            });
+            it(" right and below", function () {
+                expect(board.getNeighbours(0, 0)).toEqual([2, 3, 4]);
+            });
+            it(" left and top", function () {
+                expect(board.getNeighbours(1, 1)).toEqual([1, 2, 3]);
+            });
 
+            it('left and below ', function(){
+                expect(board.getNeighbours(0,1)).toEqual([1,3,4]);
+            });
+        });
+        describe("cases with 9 cells neighbours:", function(){
+          beforeEach(function(){
+              board.board = [
+                  [1,2,3],
+                  [4,5,6],
+                  [7,8,9]
+              ];
+          });
+            it("for position 2", function () {
+                expect(board.getNeighbours(0,1)).toEqual([1,3,4,5,6]);
+
+            });
+
+            it("for position 4", function () {
+                expect(board.getNeighbours(1,0)).toEqual([1,2,5,7,8]);
+            });
+            it("for position 5", function () {
+                expect(board.getNeighbours(1,1)).toEqual([1,2,3,4,6,7,8,9]);
+            });
+
+            it("for position 6", function () {
+                expect(board.getNeighbours(1,2)).toEqual([2,3,5,8,9]);
+            });
+            it("for position 8", function () {
+                expect(board.getNeighbours(2,1)).toEqual([4,5,6,7,9]);
+            });
+
+            it("for position 1", function () {
+                expect(board.getNeighbours(0,0)).toEqual([2,4,5]);
+            });
+
+            it("for position 3", function () {
+                expect(board.getNeighbours(0,2)).toEqual([2,5,6]);
+            });
+
+            it("position 7", function () {
+                expect(board.getNeighbours(2,0)).toEqual([4,5,8]);
+            });
+
+
+            it("position 9", function () {
+                expect(board.getNeighbours(2,2)).toEqual([5,6,8]);
+            });
+
+        });
 
     });
 

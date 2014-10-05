@@ -104,49 +104,73 @@ Board.prototype.columnExists = function (colNumber) {
         return true;
 
     }
-          else return false;
-}
+    else return false;
+};
 
 Board.prototype.setValue = function (value, x, y) {
     this.board[x][y] = value;
 
 };
 
-Board.prototype.getNeighbours = function (x,y){
+Board.prototype.getNeighbours = function (x, y) {
 
     var neighbours = [];
 
-    if (!this.columnExists(y) || !this.rowExists(x)){
-    return undefined;
+    if (!this.columnExists(y) || !this.rowExists(x)) {
+        return undefined;
     }
 
-    if (this.columnExists(y+1)){
-              neighbours.push(this.board[x][y+1]);
+
+//    if( this.rowExists(x-1)){
+
+//        neighbours.push()
+//    }
+
+
+    // row above
+    if (this.rowExists(x - 1)) {
+        if (this.columnExists(y - 1)) {
+            neighbours.push(this.board[x - 1][y - 1]);
+
+        }
+        neighbours.push(this.board[x - 1][y]);
+
+        if (this.columnExists(y + 1)) {
+            neighbours.push(this.board[x - 1][y + 1]);
+
+        }
+
     }
 
-    if (this.rowExists(x+1)){
-               neighbours.push(this.board[x+1][y]);
+
+    if (this.columnExists(y - 1)) {
+        neighbours.push(this.board[x][y - 1]);
+    }
+    // same row
+    if (this.columnExists(y + 1)) {
+        neighbours.push(this.board[x][y + 1]);
+    }
+// row below
+
+    if (this.rowExists(x + 1)) {
+        if (this.columnExists(y - 1)) {
+            neighbours.push(this.board[x + 1][y-1]);
+        }
+
+        neighbours.push(this.board[x + 1][y]);
+
+        if (this.columnExists(y + 1)) {
+
+            neighbours.push(this.board[x + 1][y + 1]);
+        }
 
     }
 
-    if (this.rowExists(x+1) && (this.columnExists(y+1))){
-       neighbours.push(this.board[x+1][y+1]);
-    }
-    if (this.rowExists(x-1) && (this.columnExists(y-1))){
-       neighbours.push(this.board[x-1][y-1]);
-    }
-    if (this.rowExists(x-1) ){
-       neighbours.push(this.board[x-1][y]);
-    }
-    if (this.columnExists(y-1) ){
-       neighbours.push(this.board[x][y-1]);
-    }
 
+//    if (this.columnExists())
 
 
     return neighbours;
-
-
 
 
 };
