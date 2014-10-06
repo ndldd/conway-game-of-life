@@ -4,14 +4,19 @@
 //board.makeRandom()
 //console.log(board);
 
-var controller = new Controller();
+
+require(['./controller' ], function () {
+
+    var controller = new Controller();
+//console.log(Controller);
 
 
-controller.createBoard();
-controller.drawBoard();
-controller.removeBoard();
+    controller.createBoard();
+    controller.drawBoard();
+    controller.removeBoard();
 
-setInterval(function (){
+    setInterval(function () {
 
-controller.refresh();
-}, 20);
+        controller.refresh();
+    }, 20);
+});

@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Mon Oct 06 2014 23:18:14 GMT+0200 (CEST)
+// Generated on Fri Oct 03 2014 20:32:38 GMT+0200 (CEST)
 
 module.exports = function(config) {
   config.set({
@@ -15,14 +15,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test-main.js',
-      {pattern: 'js/*.js', included: false},
-      {pattern: 'test/**/*.spec.js', included: false}
+      'js/**/*.js',
+      'test/**/*.spec.js',
+        'test/test-main.js'
+
     ],
 
 
     // list of files to exclude
     exclude: [
+        'js/main.js'
     ],
 
 
