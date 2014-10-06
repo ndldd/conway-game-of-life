@@ -7,52 +7,6 @@
 beforeEach(function () {
 });
 
-describe('some suite', function () {
-    var suiteWideFoo;
-
-
-    beforeEach(function () {
-        suiteWideFoo = 1;
-//        jasmine.addMatchers({
-//            mymatch: function () {
-//                return {
-//                    compare: function (actual, expected) {
-//                        return {
-//                            pass: (actual % 2) === 0
-//                        };
-//                    }
-//                };
-//            }
-//        });
-//
-//
-    });
-
-    it('should equal bar', function () {
-//        expect(4).toBeExponentiallyLessThan(3);
-        expect(suiteWideFoo).toEqual(1);
-//        expect(0).mymatch(0);
-    });
-
-    describe('some suite', function () {
-//        var suiteWideFoo;
-//
-//        beforeEach(function () {
-//            suiteWideFoo = 1;
-//        });
-        beforeEach(function () {
-
-        });
-
-
-        it('should equal bar', function () {
-            expect(suiteWideFoo).toEqual(1);
-
-        });
-    });
-
-});
-
 
 describe('Board', function () {
 
@@ -318,57 +272,163 @@ describe('Board', function () {
                 expect(board.getNeighbours(1, 1)).toEqual([1, 2, 3]);
             });
 
-            it('left and below ', function(){
-                expect(board.getNeighbours(0,1)).toEqual([1,3,4]);
+            it('left and below ', function () {
+                expect(board.getNeighbours(0, 1)).toEqual([1, 3, 4]);
             });
         });
-        describe("cases with 9 cells neighbours:", function(){
-          beforeEach(function(){
-              board.board = [
-                  [1,2,3],
-                  [4,5,6],
-                  [7,8,9]
-              ];
-          });
+        describe("cases with 9 cells neighbours:", function () {
+            beforeEach(function () {
+                board.board = [
+                    [1, 2, 3],
+                    [4, 5, 6],
+                    [7, 8, 9]
+                ];
+            });
             it("for position 2", function () {
-                expect(board.getNeighbours(0,1)).toEqual([1,3,4,5,6]);
+                expect(board.getNeighbours(0, 1)).toEqual([1, 3, 4, 5, 6]);
 
             });
 
             it("for position 4", function () {
-                expect(board.getNeighbours(1,0)).toEqual([1,2,5,7,8]);
+                expect(board.getNeighbours(1, 0)).toEqual([1, 2, 5, 7, 8]);
             });
             it("for position 5", function () {
-                expect(board.getNeighbours(1,1)).toEqual([1,2,3,4,6,7,8,9]);
+                expect(board.getNeighbours(1, 1)).toEqual([1, 2, 3, 4, 6, 7, 8, 9]);
             });
 
             it("for position 6", function () {
-                expect(board.getNeighbours(1,2)).toEqual([2,3,5,8,9]);
+                expect(board.getNeighbours(1, 2)).toEqual([2, 3, 5, 8, 9]);
             });
             it("for position 8", function () {
-                expect(board.getNeighbours(2,1)).toEqual([4,5,6,7,9]);
+                expect(board.getNeighbours(2, 1)).toEqual([4, 5, 6, 7, 9]);
             });
 
             it("for position 1", function () {
-                expect(board.getNeighbours(0,0)).toEqual([2,4,5]);
+                expect(board.getNeighbours(0, 0)).toEqual([2, 4, 5]);
             });
 
             it("for position 3", function () {
-                expect(board.getNeighbours(0,2)).toEqual([2,5,6]);
+                expect(board.getNeighbours(0, 2)).toEqual([2, 5, 6]);
             });
 
             it("position 7", function () {
-                expect(board.getNeighbours(2,0)).toEqual([4,5,8]);
+                expect(board.getNeighbours(2, 0)).toEqual([4, 5, 8]);
             });
 
 
             it("position 9", function () {
-                expect(board.getNeighbours(2,2)).toEqual([5,6,8]);
+                expect(board.getNeighbours(2, 2)).toEqual([5, 6, 8]);
             });
 
         });
 
     });
 
+    describe("survival Calculations", function () {
+        beforeEach(function () {
+
+            var outcome;
+            var board;
+        });
+
+
+        it("calculate survival for one cell", function () {
+
+//            var spy = spyOn(board, "getNeighbours").and.returnValue(0);
+            var outcome = board.calculateCellSurvival();
+//            expect(spy).toHaveBeenCalledWith(2,3);
+            expect(outcome).toBe(undefined);
+        });
+
+        describe("living cells", function () {
+
+            it("if there are less than two neigbours cell dies", function () {
+
+                outcome = board.calculateCellSurvival([1, 0, 0], 1);
+                expect(outcome).toBe(0);
+
+                outcome = board.calculateCellSurvival([0, 1], 1);
+                expect(outcome).toBe(0);
+            });
+
+            it("if there are two or three neighbours cell lives ", function () {
+                outcome = board.calculateCellSurvival([0, 1, 1], 1);
+                expect(outcome).toBe(1);
+                outcome = board.calculateCellSurvival([0, 1, 1, 1], 1);
+                expect(outcome).toBe(1);
+            });
+            it("more than three neighbours cells dies", function () {
+                outcome = board.calculateCellSurvival([1, 1, 1, 1], 1);
+                expect(outcome).toBe(0);
+                outcome = board.calculateCellSurvival([1, 1, 1, 1, 1], 1);
+                expect(outcome).toBe(0);
+            });
+
+
+        });
+        describe("dead cells", function () {
+
+            it("with three neigbhours cell gets born", function () {
+                outcome = board.calculateCellSurvival([1, 1, 1, 0, 0], 0);
+                expect(outcome).toBe(1);
+                outcome = board.calculateCellSurvival([1, 1, 1, 1, 0], 0);
+                expect(outcome).toBe(0);
+                outcome = board.calculateCellSurvival([1, 1, 0], 0);
+                expect(outcome).toBe(0);
+            });
+
+        });
+
+
+    });
+    describe('applying survival function to board', function () {
+        describe("return a new board ", function () {
+            var BOARDHEIGHT = 6;
+            var BOARDWIDTH = 4;
+            board = new Board(BOARDHEIGHT, BOARDWIDTH);
+
+            it("has same dimensions", function () {
+
+
+                board.makeNextGeneration();
+
+                expect(board.board.length) === BOARDHEIGHT;
+                expect(board.board[0].length) === BOARDWIDTH;
+            });
+
+            it("board sum should be different with new generation", function () {
+                var BOARDHEIGHT = 3;
+                var BOARDWIDTH = 3;
+                board = new Board(BOARDHEIGHT, BOARDWIDTH);
+                board.board = [
+                    [1, 0, 1],
+                    [0, 0, 1],
+                    [0, 1, 0],
+                ];
+
+                var before = sumBoard(board.board);
+                expect(before).toBe(4);
+
+                board.makeNextGeneration();
+                var after = sumBoard(board.board);
+//                expect(after).not.toEqual(before);
+
+            });
+            it('calls survival for each cell', function () {
+                var BOARDHEIGHT = 6;
+                var BOARDWIDTH = 4;
+                board = new Board(BOARDHEIGHT, BOARDWIDTH);
+
+
+                var spy = spyOn(board, 'calculateCellSurvival').and.callThrough();
+                board.makeNextGeneration();
+
+                expect(spy.calls.count()).toEqual(BOARDHEIGHT * BOARDWIDTH);
+
+            });
+
+
+        });
+    });
 
 });
