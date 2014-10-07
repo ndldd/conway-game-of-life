@@ -1,9 +1,14 @@
 
+@tileSize: 5px;
+@board-width: @tileSize * 150;
+
 body {
-  line-height: 5px;
+  line-height: 3px ;
 }
-@tileSize: 3px;
-@board-width: @tileSize * 500;
+
+div.row{
+//  display: inline-block;
+}
 
 .board {
   min-width: @board-width;
@@ -16,7 +21,8 @@ body {
 //  display: inline-block;
   border: 1px solid lightgrey;
 //  margin-top: -5px;
-    float: left;
+  display: inline-block;
+//    float: left;
 //  width: 10px;
   margin: 0;
   padding: 0;

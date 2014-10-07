@@ -12,7 +12,6 @@ define( ['./board'],function () {
 
 
             var newBoard = [];
-            var row = new Array(columns);
 
             var arr, j;
             for (var i = 0; i < rows; i++) {
@@ -26,11 +25,6 @@ define( ['./board'],function () {
             }
 
             if (typeof nextGeneration === 'undefined') {
-
-//            newBoard =
-//        rows = []
-//        for (var i=0;i<columns; i++){
-//
 
                 this.board = newBoard;
             }
@@ -87,14 +81,10 @@ define( ['./board'],function () {
     };
     Board.prototype.calculateRowSurvival = function (currentRow, rowNumber, boardRows) {
 
-
-
-//    console.log(this.board);
         boardRows[rowNumber] = currentRow.map(function (status, colNumber, row) {
             var cellNeighbours = this.getNeighbours(rowNumber, colNumber);
             var outcome = this.calculateCellSurvival(cellNeighbours, status);
-//        console.log('verdict', outcome);
-//        console.log('==================');
+
             this.nextGeneration[rowNumber][colNumber] = outcome;
 
             return status;
@@ -102,23 +92,6 @@ define( ['./board'],function () {
         }, this);
 
 
-    };
-
-    Board.prototype.calculate = function (x, y) {
-
-        var sum = 0;
-        if (x > 0) {
-//        console.log('above');
-            sum += this.board[x - 1][y];
-        }
-        sum += this.board[x][y];
-//    console.log(this.rows);
-//    console.log(this.board);
-        if (x < (this.rows - 1)) {
-            console.log('below');
-            sum += this.board[x + 1][y];
-        }
-        return sum;
     };
 
     Board.prototype.rowExists = function (rowNumber) {

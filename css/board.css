@@ -1,0 +1,34 @@
+body {
+  line-height: 3px ;
+}
+.board {
+  min-width: 750px;
+}
+.tile {
+  height: 5px;
+  width: 5px;
+  border: 1px solid lightgrey;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+div.on {
+  height: 5px;
+  width: 5px;
+  border: 1px solid lightgrey;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  border-color: gray;
+}
+div.off {
+  height: 5px;
+  width: 5px;
+  border: 1px solid lightgrey;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border-color: lightgrey;
+}

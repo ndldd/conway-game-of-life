@@ -1,0 +1,31 @@
+@buttonColor: #ffe113;
+@buttonBorder: orange;
+
+.board-controls {
+  margin: 10px;
+
+}
+
+
+div.board-controls > button {
+
+  background-color: @buttonColor;
+  //  border: #ffff00;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid @buttonBorder;
+  border-radius: 4px;
+
+
+  &:hover {
+
+    background-color: lighten( @buttonColor, 25%);
+    border-color: lighten( @buttonBorder, 25%);
+  }
+}
+
+div.board {
+  margin: 15px;
+}
