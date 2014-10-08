@@ -1,5 +1,5 @@
 
-define( ['./board'],function () {
+define( function () {
 
 
     function Board(rows, columns) {

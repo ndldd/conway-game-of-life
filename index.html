@@ -19,9 +19,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/controller.css">
     <link rel="stylesheet" href="css/board.css">
-    <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
@@ -32,19 +33,24 @@
 
 <!-- Add your site or application content here -->
 
-<h1>Conway Game of Life in HTML/JS.</h1>
+<div class="content">
 
-<div class="board-controls">
 
-    <button onclick="conway.controller.stop()"> stop</button>
-    <button onclick="conway.controller.continue()"> continue</button>
-    <button onclick="conway.controller.reset()"> reset</button>
-    <button onclick="conway.switch()"> switch View and Controller</button>
-</div>
+    <h1>Conway Game of Life in HTML/JS.</h1>
 
-<p id="controller-name"></p>
-<div class="board" id="board">
+    <div class="board-controls">
 
+        <button onclick="conway.controller.stop()"> stop</button>
+        <button onclick="conway.controller.continue()"> continue</button>
+        <button onclick="conway.controller.reset()"> reset</button>
+        <button onclick="conway.switch()"> switch View and Controller</button>
+    </div>
+
+    <p id="controller-name"></p>
+
+    <div class="board" id="board">
+
+    </div>
 </div>
 
 <!--

@@ -3,7 +3,7 @@
  */
 
 
-define(['./controller', './canvasController'], function (Controller, canvasController) {
+define(['./controller', './canvasController', './counter'], function (Controller, canvasController, Counter) {
 //require(['./controller' ], function () {
 
     var body = document.getElementsByTagName('body')[0];
@@ -39,11 +39,14 @@ define(['./controller', './canvasController'], function (Controller, canvasContr
         }
 
     };
-    var controller = app.controller = new Controller();
+
+    var counter = new Counter();
+    var controller = app.controller = new Controller(counter);
 
 
     controller.createBoard();
     controller.drawBoard();
+    controller.displayCounter();
     controller.removeBoard();
 
 //    setInterval(function () {

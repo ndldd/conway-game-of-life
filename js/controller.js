@@ -1,9 +1,16 @@
-define(['./board'], function (Board) {
+define(['./board' ], function (Board ) {
 
 
-    Controller = function () {
+//    var counter = new Counter();
+
+    var Controller = function (counter) {
 
         this.timeouts = [];
+        if (counter != null){
+
+        this.generationCounter =  counter;
+
+        }
 
         this.name = 'classic / No Canvas';
 
@@ -15,26 +22,35 @@ define(['./board'], function (Board) {
 
     Controller.prototype.createBoard = function () {
 
-       var  board = this.board = new Board(100, 100);
+        var board = this.board = new Board(100, 100);
         this.halt = false;
 
         board.makeRandom();
         this.world = board;
 
 
-
     };
 
+    Controller.prototype.displayCounter= function(){
+        var board = document.getElementById('board');
+        var counter = document.createElement('p');
+        counter.id = 'generationCounter';
+        counter.innerText= 'current Generation: ' + String(this.generationCounter.get());
+        board.parentElement.insertBefore(counter,board);
+
+    };
+    Controller.prototype.updateCounter = function(){
+        var counter = document.getElementById('generationCounter');
+        counter.innerText = 'current Generation: ' + String(this.generationCounter.get());
+
+    };
     Controller.prototype.drawBoard = function (callback) {
-
-
         var board = document.getElementById('board');
 
-//    console.log(this.world);
         var rows = this.world.board;
         for (row in rows) {
             var htmlRow = document.createElement('div');
-            htmlRow.className='row';
+            htmlRow.className = 'row';
             for (column in rows[row]) {
                 var tile = document.createElement('div');
                 if (rows[row][column] === 0) {
@@ -59,12 +75,10 @@ define(['./board'], function (Board) {
     };
 
 
+
     Controller.prototype.removeBoard = function () {
         var board = document.getElementById('board');
-//    console.log(board);
-    board.innerHTML = '';
-
-
+        board.innerHTML = '';
     };
 
 
@@ -78,16 +92,18 @@ define(['./board'], function (Board) {
         console.log('stop');
     };
 
-    Controller.prototype.continue = function(){
+    Controller.prototype.continue = function () {
         this.halt = false;
         this.refresh();
-    }
-    Controller.prototype.reset = function(){
+    };
+    Controller.prototype.reset = function () {
         this.halt = true;
         this.board.makeRandom();
-        this.removeBoard()
-        this.drawBoard()
-    }
+        this.removeBoard();
+        this.drawBoard();
+        this.generationCounter.reset();
+        this.updateCounter();
+    };
 
 
     Controller.prototype.refresh = function () {
@@ -95,16 +111,20 @@ define(['./board'], function (Board) {
 
         var board = document.getElementById('board');
         if (!this.halt) {
-        board.innerHTML = '';
-        var newBoard = new Board(100, 100);
-        newBoard.makeRandom();
+            board.innerHTML = '';
+            var newBoard = new Board(100, 100);
+            newBoard.makeRandom();
 //    this.world =          newBoard;
-        this.world.makeNextGeneration();
-//    console.log();
+            this.world.makeNextGeneration();
+            this.generationCounter.add();
+            this.updateCounter();
+            console.log(this.generationCounter.get());
 //    console.log(this.world.nextGeneration)
-        this.world.board = this.world.nextGeneration;
+            this.world.board = this.world.nextGeneration;
 
-        var self = this;
+
+
+            var self = this;
 
 
             this.drawBoard(
@@ -139,7 +159,7 @@ define(['./board'], function (Board) {
 //            }
 //            board.appendChild(document.createElement('br'));
 //        }
-    } ;
+    };
     return Controller;
 
 
