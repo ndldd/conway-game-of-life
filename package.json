@@ -16,7 +16,8 @@
   "devDependencies": {
     "karma": "~0.12.24",
     "karma-jasmine": "~0.2.2",
-    "karma-requirejs": "~0.2.2"
+    "karma-requirejs": "~0.2.2",
+    "karma-html2js-preprocessor": "~0.1.0"
   },
   "scripts": {
     "test": "test"
