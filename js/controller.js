@@ -32,11 +32,13 @@ define(['./board' ], function (Board ) {
     };
 
     Controller.prototype.displayCounter= function(){
-        var board = document.getElementById('board');
+
+        var board = document.getElementById('view-container');
         var counter = document.createElement('p');
         counter.id = 'generationCounter';
         counter.innerText= 'current Generation: ' + String(this.generationCounter.get());
-        board.parentElement.insertBefore(counter,board);
+
+        board.parentElement.insertBefore(counter, board);
 
     };
     Controller.prototype.updateCounter = function(){
@@ -45,6 +47,7 @@ define(['./board' ], function (Board ) {
 
     };
     Controller.prototype.drawBoard = function (callback) {
+
         var board = document.getElementById('board');
 
         var rows = this.world.board;

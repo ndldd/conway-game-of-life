@@ -10,17 +10,17 @@ module.exports = function (config) {
 
             // frameworks to use
             // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-            frameworks: ['jasmine', 'requirejs'
-            ],
+            frameworks: ['jasmine', 'requirejs'],
 
 
             // list of files / patterns to load in the browser
             files: [
                 'test-main.js',
-                'test_fixtures/**/*.html',     // html
+                'js/text.js',
+//                'test_fixtures/**/*.html',     // html
                 'index.html',     // html
 
-                {pattern: 'js/*.js', included: false},
+                {pattern: 'js/**/*.js', included: false},
                 {pattern: 'test/**/*.spec.js', included: false}                             ,
                 {pattern: 'css/**/*.css', included: false, served: true},
             ],
@@ -32,6 +32,7 @@ module.exports = function (config) {
 
             // list of files to exclude
             exclude: [
+//                'js/text.js'
 
             ],
 

@@ -5,24 +5,29 @@
     <title></title>
 </head>
 <body>
-  div class="content">
+
+<div class="content">
 
 
     <h1>Conway Game of Life in HTML/JS.</h1>
 
-    <div class="board-controls">
+    <div id="view-container">
+        <div class="board-controls">
 
-        <button onclick="conway.controller.stop()"> stop</button>
-        <button onclick="conway.controller.continue()"> continue</button>
-        <button onclick="conway.controller.reset()"> reset</button>
-        <button onclick="conway.switch()"> switch View and Controller</button>
+            <button onclick="conway.controller.stop()"> stop</button>
+            <button onclick="conway.controller.continue()"> continue</button>
+            <button onclick="conway.controller.reset()"> reset</button>
+            <button onclick="conway.switch()"> switch View and Controller</button>
+        </div>
+
+        <p id="controller-name"></p>
+
+
+
+        </div>
     </div>
+</div>
 
-    <p id="controller-name"></p>
-
-    <div class="board" id="board">
-
-    </div>
 </div>
 
 <!--
