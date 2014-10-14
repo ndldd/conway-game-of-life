@@ -121,7 +121,7 @@ define(['./board' ], function (Board ) {
             this.world.makeNextGeneration();
             this.generationCounter.add();
             this.updateCounter();
-            console.log(this.generationCounter.get());
+//            console.log(this.generationCounter.get());
 //    console.log(this.world.nextGeneration)
             this.world.board = this.world.nextGeneration;
 

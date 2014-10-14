@@ -14,25 +14,29 @@ module.exports = function (config) {
 
 
             // list of files / patterns to load in the browser
+
             files: [
                 'test-main.js',
-                'js/text.js',
+//                'js/text.js',
 //                'test_fixtures/**/*.html',     // html
                 'index.html',     // html
-
+//                {pattern: 'js/**/*.html', included: false},
                 {pattern: 'js/**/*.js', included: false},
+                {pattern: 'js/**/*.html', watched: true, included: false, served: true},
                 {pattern: 'test/**/*.spec.js', included: false}                             ,
+//                {pattern: 'js/views/*.html', included: true, served:true},
                 {pattern: 'css/**/*.css', included: false, served: true},
             ],
 
             proxies: {
-                '/css/': '/base/css/'                   // 404 warning bc css from index file not found
+                '/css/': '/base/css/',                   // 404 warning bc css from index file not found
+//                '/views/': '/base/views/'                   // 404 warning bc css from index file not found
             },
 
 
             // list of files to exclude
             exclude: [
-//                'js/text.js'
+                'js/main.js'
 
             ],
 
@@ -40,8 +44,11 @@ module.exports = function (config) {
             // preprocess matching files before serving them to the browser
             // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
             preprocessors: {
-                '**/*.html': ['html2js']
+//                '**/*.html': ['html2js']
+                'index.html': ['html2js']
+//                '**/*.html': []
             },
+
 
 
             // test results reporter to use

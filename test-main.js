@@ -11,14 +11,28 @@ Object.keys(window.__karma__.files).forEach(function(file) {
     allTestFiles.push(pathToModule(file));
   }
 });
+console.log('in testmain');
 
 require.config({
   // Karma serves files under /base, which is the basePath from your config file
   baseUrl: '/base',
 
-  // dynamically load all test files
-  deps: allTestFiles,
 
+
+
+    paths:{
+         text: "js/text"
+    },
+    // dynamically load all test files
+  deps: allTestFiles,
   // we have to kickoff jasmine, as it is asynchronous
   callback: window.__karma__.start
+
+//     callback: function() {
+//        console.log('start to load test cases!');
+//        require(['test/TestSuite'], function() {
+//            console.log('load all test cases done!');
+//            window.__karma__.start();
+//        });
+//    }
 });

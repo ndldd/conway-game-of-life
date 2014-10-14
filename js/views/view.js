@@ -1,6 +1,8 @@
-define(['text!views/viewtemplate.html'], function (template) {
+define(['text!./viewtemplate.html'], function (template) {
+    console.log('-----------');
+    console.log(template);
     var View = function () {
-//        template = require(['text!./viewtemplate.html']);
+//        template = require(['text!./jsviewtemplate.html']);
         console.log(template);
         var container = document.getElementById('view-container');
 
