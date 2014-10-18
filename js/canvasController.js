@@ -3,7 +3,7 @@
  */
 
 
-define(['./board', './controller'], function (Board) {
+define(['./models/board', './controller'], function (Board) {
 
     // wann als factory wann als instance?
 

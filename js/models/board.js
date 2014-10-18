@@ -1,11 +1,16 @@
+define(function () {
 
-define( function () {
 
-
-    function Board(rows, columns) {
+    function Board(rows, columns, counter) {
 
         this.rows = rows;
         this.columns = columns;
+        this.observers = [];
+
+
+        if (counter) {
+            this.counter = counter;
+        }
 
 
         this.init = function (rows, columns, nextGeneration) {
@@ -59,7 +64,11 @@ define( function () {
             }
             this.board.push(arr);
         }
+        if(this.counter){
+            this.counter.reset();
+        }
 
+            this.notifyObservers();
 
     };
 
@@ -74,11 +83,25 @@ define( function () {
         this.init(this.rows, this.columns, true);
 
         this.board.map(this.calculateRowSurvival, this);
+
+        this.board = this.nextGeneration;
+        if (this.counter) {
+            this.counter.add();
+        }
+        this.notifyObservers();
 //    console.log('this',this.board);
 //    console.log( 'next',this.nextGeneration);
 //    console.log( 'this',this.board);
 
     };
+
+    Board.prototype.notifyObservers = function () {
+
+        for (var i = 0; i < this.observers.length; i++) {
+            this.observers[i]();
+        }
+    }
+
     Board.prototype.calculateRowSurvival = function (currentRow, rowNumber, boardRows) {
 
         boardRows[rowNumber] = currentRow.map(function (status, colNumber, row) {
@@ -209,6 +232,11 @@ define( function () {
         }
     };
 
+
+    Board.prototype.addSubscriber = function (callback) {
+        this.observers.push(callback);
+
+    }
     return Board;
 
 });

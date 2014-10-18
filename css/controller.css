@@ -1,7 +1,7 @@
 .board-controls {
   margin: 10px;
 }
-div.board-controls > button {
+button {
   background-color: #ffe113;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -10,7 +10,7 @@ div.board-controls > button {
   border: 1px solid #ffa500;
   border-radius: 4px;
 }
-div.board-controls > button:hover {
+button:hover {
   background-color: #fff193;
   border-color: #ffd280;
 }

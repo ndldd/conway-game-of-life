@@ -2,11 +2,10 @@
  * Created by thomas on 03.10.14.
  */
 
-define(['js/board' ], function (Board) {
+define(['js/models/board', 'js/models/counter' ], function (Board, Counter) {
 //var jasmine;
     beforeEach(function () {
     });
-
 
     describe('Board', function () {
 
@@ -325,7 +324,7 @@ define(['js/board' ], function (Board) {
 
         });
 
-        describe("survival Calculations", function () {
+        describe("making survival Calculations", function () {
             beforeEach(function () {
 
                 var outcome;
@@ -333,7 +332,7 @@ define(['js/board' ], function (Board) {
             });
 
 
-            it("calculate survival for one cell", function () {
+            it("calculates survival for one cell", function () {
 
 //            var spy = spyOn(board, "getNeighbours").and.returnValue(0);
                 var outcome = board.calculateCellSurvival();
@@ -432,5 +431,75 @@ define(['js/board' ], function (Board) {
             });
         });
 
+        describe("subscribing", function () {
+
+            it('adds subscribers', function () {
+
+
+                board = new Board(3, 4)
+                callback = function () {
+
+                };
+
+                board.addSubscriber(callback);
+
+                expect(board.observers).toContain(callback);
+            });
+
+        });
+        describe("when updating the board,", function () {
+            describe("notifies subscribers", function () {
+                var spy;
+                var board;
+                beforeEach(function () {
+                    board = new Board(3, 4)
+
+                    spy = jasmine.createSpy('spy');
+
+                    board.addSubscriber(spy);
+
+                });
+
+                it("on update", function () {
+
+                    board.makeNextGeneration();
+                    expect(spy).toHaveBeenCalled();
+
+                });
+                it("on make random", function () {
+
+                    board.makeRandom();
+                    expect(spy).toHaveBeenCalled();
+
+                });
+            });
+            describe("notifies other collaborators ", function () {
+
+                var counter;
+                beforeEach(function () {
+//
+                    counter = jasmine.createSpyObj('counter', ['add','reset']);
+
+                    board = new Board(3, 3, counter);
+//                        spyOn(counter,'add');
+                });
+                it(" when making a new generation: calls counter", function () {
+
+                    board.makeNextGeneration();
+                    expect(counter.add).toHaveBeenCalled();
+
+
+                });
+
+                it("when making random: resets counter", function () {
+                    board.makeRandom();
+                    expect(board.counter.reset).toHaveBeenCalled();
+
+                });
+
+
+            });
+        });
     });
+
 });
