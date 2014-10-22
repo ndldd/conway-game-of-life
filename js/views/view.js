@@ -1,24 +1,37 @@
+/**
+ *@fileOverview
+ *@version 1.0
+ *
+ * @namespace conway.view
+ */
 define(['text!./viewtemplate.html'], function (template) {
-//    console.log('-----------');
-//    console.log(template);
 
-
-    var View = function (board, counter) {
+    /**
+     * Class for Creating an Board consisting of DIVs
+     *
+     * @param {Board} board
+     * @param {Counter} counter
+     * @param specialTemplate
+     * @constructor
+     */
+    var View = function (board, counter, specialTemplate) {
 //        template = require(['text!./jsviewtemplate.html']);
 
         var container = document.getElementById('view-container');
         var div = document.createElement('div')
 
+        if (specialTemplate) {
+            template = specialTemplate;
+        }
         div.innerHTML = template;
         container.appendChild(div);
-
 
 
         if (board) {
             this.board = board;
 
         }
-        if (counter){
+        if (counter) {
             this.counter = counter;
         }
 
@@ -72,16 +85,21 @@ define(['text!./viewtemplate.html'], function (template) {
 //        console.log('called');
         this.removeHtmlBoard();
         this.displayBoard(this.board.board);
-        this.updateCounterDisplay()
+        this.updateCounterDisplay();
     };
 
     View.prototype.addCounter = function () {
         var container = document.getElementById('view-container');
         var div = document.createElement('div');
-        div.id='generationCounter';
-        div.innerText='Generation: '+ this.counter.getCount();
+        div.id = 'generationCounter';
+        div.innerText = 'Generation: ' + this.counter.getCount();
         container.appendChild(div);
 
+    };
+    View.prototype.destroy = function () {
+        var container = document.getElementById('view-container');
+        container.innerHTML = "";
+        this.unsubscribe(this.board);
     };
 
     View.prototype.updateCounterDisplay = function () {
@@ -89,8 +107,8 @@ define(['text!./viewtemplate.html'], function (template) {
         this.removeCounterDisplay();
         this.addCounter();
     };
-    View.prototype.removeCounterDisplay = function(){
-        var   htmlCounter = document.getElementById('generationCounter');
+    View.prototype.removeCounterDisplay = function () {
+        var htmlCounter = document.getElementById('generationCounter');
         htmlCounter.parentNode.removeChild(htmlCounter);
     };
 
@@ -101,7 +119,11 @@ define(['text!./viewtemplate.html'], function (template) {
 
     };
 
+    View.prototype.unsubscribe = function (board) {
+        this.board.removeSubscriber(this.draw.bind(this));
 
+
+    };
     return View;
 
 });

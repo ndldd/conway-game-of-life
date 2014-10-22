@@ -1,8 +1,10 @@
-body {
-  line-height: 3px ;
-}
 .board {
+  line-height: 3px ;
+  align: center;
   min-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .tile {
   height: 5px;

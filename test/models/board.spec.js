@@ -431,22 +431,34 @@ define(['js/models/board', 'js/models/counter' ], function (Board, Counter) {
             });
         });
 
-        describe("subscribing", function () {
-
-            it('adds subscribers', function () {
+        describe("observers ", function () {
+            var board, callback;
+            beforeEach(function () {
 
 
                 board = new Board(3, 4)
                 callback = function () {
 
                 };
+            });
+
+            it('adds subscribers', function () {
+
 
                 board.addSubscriber(callback);
 
                 expect(board.observers).toContain(callback);
             });
+            it("removes subscribers", function () {
+                board.addSubscriber(callback);
+
+                board.removeSubscriber(callback);
+                expect(board.observers).not.toContain(callback);
+
+            });
 
         });
+
         describe("when updating the board,", function () {
             describe("notifies subscribers", function () {
                 var spy;
@@ -478,7 +490,7 @@ define(['js/models/board', 'js/models/counter' ], function (Board, Counter) {
                 var counter;
                 beforeEach(function () {
 //
-                    counter = jasmine.createSpyObj('counter', ['add','reset']);
+                    counter = jasmine.createSpyObj('counter', ['add', 'reset']);
 
                     board = new Board(3, 3, counter);
 //                        spyOn(counter,'add');

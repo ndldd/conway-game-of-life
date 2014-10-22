@@ -1,16 +1,18 @@
-define(['js/models/simrunner' ], function (SimRunner) {
+define(['js/models/simrunner', 'js/app.constants' ], function (SimRunner, constants) {
 
     describe('SimRunner', function () {
         describe('creates initialized objects', function () {
 
             var runner;
 
+
             it("has calls a board", function () {
 
-                var board = {}
+                var board = {};
                 runner = new SimRunner(board);
                 expect(runner).toBeDefined();
                 expect(runner.board).toBeDefined();
+                expect(runner.stepDuration).toBeDefined();
 
 
             });
@@ -21,7 +23,7 @@ define(['js/models/simrunner' ], function (SimRunner) {
 
             var board;
             var spy;
-            var SIM_DURATION = 200;
+            var SIM_DURATION = constants.stepDuration;
 
             beforeEach(function () {
 

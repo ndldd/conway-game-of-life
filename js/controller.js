@@ -1,36 +1,36 @@
-define(['./models/board' ], function (Board ) {
+define(['./models/board' ], function (Board) {
 
 
 //    var counter = new Counter();
 
     var Controller = function (counter, simRunner, view) {
 
-        if(view){
-            this.view=view;
+        if (view) {
+            this.view = view;
             this.displayCounter();
-        };
+        }
         this.timeouts = [];
-        if (counter != null){
+        if (counter != null) {
 
-        this.generationCounter =  counter;
+            this.generationCounter = counter;
 
         }
 
 
         this.name = 'classic / No Canvas';
-        if (simRunner){
+        if (simRunner) {
             this.simRunner = simRunner;
         }
 
     };
 
 
-    Controller.prototype.startSimulation = function(){
+    Controller.prototype.startSimulation = function () {
         this.simRunner.start();
 
     };
     Controller.prototype.resetSimulation = function () {
-     this.simRunner.reset();
+        this.simRunner.reset();
     };
 
     Controller.prototype.displayCounter = function () {
@@ -38,8 +38,6 @@ define(['./models/board' ], function (Board ) {
         this.view.addCounter();
 
     };
-
-
 
 
 //a =new Board();

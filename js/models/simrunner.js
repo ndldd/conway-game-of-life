@@ -1,8 +1,11 @@
-define(function () {
+define(['../app.constants'],function (constants) {
+
+
     var SimRunner = function (board) {
 
         this.board = board;
         this.halt = false;
+        this.stepDuration = constants.stepDuration;
 
 
 
@@ -23,23 +26,22 @@ define(function () {
             this.board.makeRandom();
             this.started=true;
         }
-//        console.log('running');
-//        console.log('running');
+
         if (!this.halt) {
         this.board.makeNextGeneration();
             window.setTimeout(function () {
                 this.run();
-            }.bind(this), 200);
+            }.bind(this), this.stepDuration);
         }
-
     };
+
     SimRunner.prototype.stop = function () {
         this.halt = true;
     };
 
 
     SimRunner.prototype.reset = function () {
-        this.board.makeRandom()
+        this.board.makeRandom();
 //        this.halt
 
 

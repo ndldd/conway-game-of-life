@@ -64,11 +64,11 @@ define(function () {
             }
             this.board.push(arr);
         }
-        if(this.counter){
+        if (this.counter) {
             this.counter.reset();
         }
 
-            this.notifyObservers();
+        this.notifyObservers();
 
     };
 
@@ -236,7 +236,15 @@ define(function () {
     Board.prototype.addSubscriber = function (callback) {
         this.observers.push(callback);
 
-    }
+    };
+    Board.prototype.removeSubscriber = function (callback) {
+        for (var i = this.observers.length-1; i >= 0; i--) {
+            if (this.observers[i] === callback) {
+                this.observers.splice(i,1);
+            }
+        }
+    };
+
     return Board;
 
 });

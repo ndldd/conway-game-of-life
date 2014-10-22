@@ -1,4 +1,4 @@
-define(['require' , 'js/app' ], function (require, app) {
+define(['require' , 'js/app' , 'js/views/view', 'js/views/canvasview'], function (require, app, View, CanvasView) {
 
     beforeEach(function () {
         document.body.innerHTML = window.__html__['index.html'];
@@ -51,10 +51,48 @@ define(['require' , 'js/app' ], function (require, app) {
 
         });
         it("reset", function () {
-             expect(app.reset).toBeDefined();
+            expect(app.reset).toBeDefined();
+
+        });
+        it("switchView", function () {
+            expect(app.selectNewView).toBeDefined();
+        });
+
+    });
+    describe("on switchView", function () {
+
+
+        it("tells current View to remove itself", function () {
+            app.view = {destroy:jasmine.createSpy('spy', 'destroy')};
+            app.createView= function () {
+
+            }
+
+            app.selectNewView();
+            expect(app.view.destroy).toHaveBeenCalled();
 
         });
 
+
+        it("app has a method to create view instances", function () {
+
+            view = app.createView(View);
+            expect(view instanceof View).toBe(true);
+            expect(view instanceof CanvasView).toBe(false);
+
+            view = app.createView(CanvasView);
+            expect(view instanceof View).toBe(true);
+            expect(view instanceof CanvasView).toBe(true);
+
+        });
+        it("creates a new view", function () {
+            app.createView = jasmine.createSpy('spy', 'createView');
+            app.selectNewView()
+
+            expect(app.createView).toHaveBeenCalled();
+
+
+        });
     });
 
     describe("passing references", function () {
@@ -75,7 +113,6 @@ define(['require' , 'js/app' ], function (require, app) {
         });
 
     });
-
 
 
 });
