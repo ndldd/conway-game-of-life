@@ -1,8 +1,6 @@
-define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html',], function (htmlView, Counter, CanvasView, canvasViewTemplate ) {
+define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html', ], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
 
-        // runs the same tests for HtmlView and for its subclass CanvasView
-var    runSuites = function (View, Counter, template) {
-
+    var runSuites = function (View, Counter, template) {
 
         describe("view adds a #board element on init", function () {
 
@@ -20,7 +18,6 @@ var    runSuites = function (View, Counter, template) {
             });
 
         });
-
         describe('View', function () {
 
             var view;
@@ -34,6 +31,7 @@ var    runSuites = function (View, Counter, template) {
                 view = null;
                 document.innerHTML = '';
             });
+
 
             describe('on instantiation creates a container element ', function () {
                 var container;
@@ -50,6 +48,7 @@ var    runSuites = function (View, Counter, template) {
                     expect(board).toBeDefined();
                 });
             });
+
 
             describe(' after instantiation', function () {
                 describe('on subscribe adds itself to Board observers', function () {
@@ -218,6 +217,7 @@ var    runSuites = function (View, Counter, template) {
 
 
                 });
+
                 describe("draws board (removes and displays new)", function () {
                     var view;
                     var mockBoard;
@@ -239,62 +239,6 @@ var    runSuites = function (View, Counter, template) {
                         mockBoard = undefined;
                     });
 
-                    describe('drawing', function () {
-                        it('board is not empty', function () {
-
-                            view.displayBoard(mockBoard);
-                            var board = document.getElementById('board');
-                            expect(board.innerHTML.trim()).not.toEqual('');
-
-                        });
-
-                    })
-
-                    it('draws board with two rows', function () {
-                        mockBoard = [
-                            [0, 0],
-                            [0, 0]
-                        ];
-
-                        view.displayBoard(mockBoard);
-
-                        var board = document.getElementById('board');
-                        expect(board.children.length).toBe(2);
-                        expect(board.children[0].className).toBe('row');
-                        expect(board.children[1].className).toBe('row');
-
-                    })
-
-                    it('rows have tiles', function () {
-                        mockBoard = [
-                            [0, 0],
-                            [0, 0]
-                        ];
-
-                        view.displayBoard(mockBoard);
-
-                        var board = document.getElementById('board');
-                        expect(board.children[0].children.length).toBe(2);
-
-                        expect(board.children[0].children[0].className).toBe('tile');
-
-
-                    });
-
-                    it('tiles have ".on" when their state is 1', function () {
-                        mockBoard = [
-                            [1, 1],
-                            [1, 1]
-                        ];
-
-                        view.displayBoard(mockBoard);
-
-                        var board = document.getElementById('board');
-
-
-                        expect(board.children[0].children[0].className).toBe('tile on');
-
-                    });
 
                 });
                 describe("changes on board updates", function () {
@@ -328,30 +272,6 @@ var    runSuites = function (View, Counter, template) {
 
                     });
 
-                    it("redraws ", function () {
-                        view = new View([
-                            [0, 0],
-                            [0, 0]
-                        ], new Counter());
-
-                        newBoard = [
-                            [1, 1],
-                            [1, 1]
-                        ];
-                        view.addCounter()
-
-                        view.displayBoard(view.board);
-                        view.board.board = newBoard;
-
-                        view.draw();
-
-
-                        var htmlBoard = document.getElementById('board');
-
-
-                        expect(htmlBoard.children[0].children[0].className).toBe('tile on');
-
-                    });
 
                     it("updates it's counter", function () {
 
@@ -407,25 +327,15 @@ var    runSuites = function (View, Counter, template) {
 
 
                 });
-                describe("on draw ", function () {
-                    it("updates the counter", function () {
-                        view.board = {};
-                        var spy = spyOn(view, 'updateCounterDisplay');
-                        view.draw();
-
-                        expect(view.updateCounterDisplay).toHaveBeenCalled();
-
-                    });
-                });
 
             });
-
-
         });
+
 
     };
 
-    runSuites(htmlView,Counter);
-    runSuites(CanvasView,Counter, canvasViewTemplate);
+    runSuites(htmlView, Counter);
+    runSuites(CanvasView, Counter, canvasViewTemplate);
+
 
 });
