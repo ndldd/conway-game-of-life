@@ -1,4 +1,8 @@
-define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Controller, Counter, View) {
+define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Controller, Counter, View) {
+    var controller;
+    beforeEach(function () {
+        controller = new Controller;
+    });
     describe('Controller', function () {
 
         describe("after instantiation ", function () {
@@ -49,7 +53,7 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
 
             describe("messages simRunner to ", function () {
                 beforeEach(function () {
-                    simRunner= jasmine.createSpyObj('simRunner', ['start', 'stop', 'reset'])
+                    simRunner = jasmine.createSpyObj('simRunner', ['start', 'stop', 'reset'])
                     controller = new Controller(null, simRunner);
                 });
 
@@ -72,7 +76,38 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
                 });
 
             });
+            describe("when collaborating", function () {
+                beforeEach(function () {
+                    controller = new Controller();
+                });
+                it("sets View", function () {
 
+                    var newView = {draw: function () { }};
+
+                    controller.setView(newView);
+
+                    expect(controller.view).toBe(newView);
+                });
+            });
+
+        });
+        describe("on set View", function () {
+            it("messages to draw the new view", function () {
+                var view = {draw: jasmine.createSpy('spy', 'draw')};
+
+                controller.setView(view);
+
+                expect(view.draw).toHaveBeenCalled();
+
+            });
+            it("has a reference to new view", function () {
+                view = {draw: function () {
+                }};
+                controller.view = null;
+
+                controller.setView(view);
+                expect(controller.view).not.toBeNull();
+            });
         });
 
         describe('tells view to add Counter', function () {
@@ -84,8 +119,8 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
 //            document.body.innerHTML = window.__html__['test_fixtures/body.html'];
 //                document.body.innerHTML = window.__html__['index.html'];
                 counter = new Counter();
-                view = new View({},counter);
-                controller = new Controller(counter,{},view);
+                view = new View({}, counter);
+                controller = new Controller(counter, {}, view);
             });
 
             it('adds counter', function () {
@@ -93,7 +128,7 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
 //                expect(document.getElementById('generationCounter')).toBe(null);
 
 
-                spyOn(view,'addCounter');
+                spyOn(view, 'addCounter');
                 controller.displayCounter();
 
                 expect(view.addCounter).toHaveBeenCalled();
@@ -103,11 +138,10 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
                 view = new View();
 
                 spyOn(view, 'addCounter');
-                controller = new Controller(counter,{}, view);
+                controller = new Controller(counter, {}, view);
                 expect(view.addCounter).toHaveBeenCalled();
 
             });
-
 
 
         });
@@ -132,5 +166,4 @@ define([ 'js/controller', 'js/models/counter', 'js/views/view'], function (Contr
         });
     });
 
-})
-;
+});

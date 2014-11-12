@@ -1,4 +1,4 @@
-define(['js/models/simrunner', 'js/app.constants' ], function (SimRunner, constants) {
+define(['src/models/simrunner', 'src/conwayapp.constants' ], function (SimRunner, constants) {
 
     describe('SimRunner', function () {
         describe('creates initialized objects', function () {
@@ -71,7 +71,7 @@ define(['js/models/simrunner', 'js/app.constants' ], function (SimRunner, consta
 
                 expect(spy).toHaveBeenCalled();
 
-                jasmine.clock().tick(SIM_DURATION+1);                // TODO:must be a constant to work
+                jasmine.clock().tick(SIM_DURATION+1);
 
 
 

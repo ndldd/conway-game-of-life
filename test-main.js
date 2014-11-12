@@ -1,38 +1,29 @@
 var allTestFiles = [];
 var TEST_REGEXP = /(spec|test)\.js$/i;
 
-var pathToModule = function(path) {
-  return path.replace(/^\/base\//, '').replace(/\.js$/, '');
+var pathToModule = function (path) {
+    return path.replace(/^\/base\//, '').replace(/\.js$/, '');
 };
 
-Object.keys(window.__karma__.files).forEach(function(file) {
-  if (TEST_REGEXP.test(file)) {
-    // Normalize paths to RequireJS module names.
-    allTestFiles.push(pathToModule(file));
-  }
+Object.keys(window.__karma__.files).forEach(function (file) {
+    if (TEST_REGEXP.test(file)) {
+        // Normalize paths to RequireJS module names.
+        allTestFiles.push(pathToModule(file));
+    }
 });
-//console.log('in testmain');
 
 require.config({
-  // Karma serves files under /base, which is the basePath from your config file
-  baseUrl: '/base',
+    // Karma serves files under /base, which is the basePath from your config file
+    baseUrl: '/base',
 
 
-
-
-    paths:{
-         text: "js/text"
+    paths: {
+        text: "src/text"
     },
     // dynamically load all test files
-  deps: allTestFiles,
-  // we have to kickoff jasmine, as it is asynchronous
-  callback: window.__karma__.start
+    deps: allTestFiles,
+    // we have to kickoff jasmine, as it is asynchronous
+    callback: window.__karma__.start
 
-//     callback: function() {
-//        console.log('start to load test cases!');
-//        require(['test/TestSuite'], function() {
-//            console.log('load all test cases done!');
-//            window.__karma__.start();
-//        });
-//    }
+
 });

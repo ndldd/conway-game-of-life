@@ -1,4 +1,4 @@
-define(['../app.constants'],function (constants) {
+define(['../conwayapp.constants'],function (constants) {
 
 
     var SimRunner = function (board) {

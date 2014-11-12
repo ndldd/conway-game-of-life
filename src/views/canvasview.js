@@ -8,7 +8,7 @@
  * @param {string} counter - The author of the book.
  * @param {string} canvasTemplate - The author of the book.
  */
-define(['text!./canvasviewtemplate.html', './view', '../app.constants'], function (canvasTemplate, View, constants) {
+define(['text!./canvasviewtemplate.html', './view', '../conwayapp.constants'], function (canvasTemplate, View, constants) {
 
 
     var TILE_SIZE = constants.tileSize;
@@ -21,7 +21,8 @@ define(['text!./canvasviewtemplate.html', './view', '../app.constants'], functio
 
 
 
-    CanvasView = function (board, counter, canvasTemplate) {
+    CanvasView = function (board, counter) {
+
         View.call(this, board, counter, canvasTemplate);
 
 
@@ -33,7 +34,7 @@ define(['text!./canvasviewtemplate.html', './view', '../app.constants'], functio
 
 //    return CanvasView;
     CanvasView.prototype.calculateCanvasSize= function (board, tileSize, padding) {
-        return board.length * (tileSize+padding);
+        return board.length * (tileSize+padding) +padding;
     };
 
     CanvasView.prototype.displayBoard = function (board, canvas) {
@@ -48,7 +49,7 @@ define(['text!./canvasviewtemplate.html', './view', '../app.constants'], functio
         canvas.style.minWidth=0; // reset html
         var context = canvas.getContext('2d');
 
-        this.drawBoardBackground(context, width, height);
+        this.drawBoardBackground(context, width+PADDING, height+PADDING);
 
 
         for (var r = 0; r < board.length; r++) {
@@ -57,16 +58,12 @@ define(['text!./canvasviewtemplate.html', './view', '../app.constants'], functio
 
         }
 
-//        var newNode= document.createTextNode('tx')
-//        newNode.textContent='test'+this.counter.getCount();
-//
-//     var board = document.getElementById('board') ;
-//        board.appendChild(newNode);
-//        console.log(this.board);
+
     };
-    CanvasView.prototype.drawBoardBackground = function (context, width, heigth) {
+    CanvasView.prototype.drawBoardBackground = function (context, width, height) {
+
         context.fillStyle = 'lightgray';
-        context.fillRect(0, 0, width, heigth);
+        context.fillRect(0, 0, width+PADDING, height+PADDING);
 
     };
 
@@ -87,8 +84,8 @@ define(['text!./canvasviewtemplate.html', './view', '../app.constants'], functio
     };
 
     CanvasView.prototype.drawRow = function (context, columnArray, rowNumber) {
-        var xPosition = 0;
-        var yPosition = rowNumber * ( TILE_SIZE + PADDING);
+        var xPosition = 0 + PADDING;
+        var yPosition = rowNumber * ( TILE_SIZE + PADDING) +PADDING;
 
         for (var i = 0, len = columnArray.length; i < len; i++) {
 

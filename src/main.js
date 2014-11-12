@@ -16,9 +16,10 @@ require.config({
 })
 
 
-require([ './app'], function(app){
-    app
+require([ './conwayapp'], function(App){
+    app = new App()
+
     app.run();
     conway = app;
-    app.displayControllerName();
+
 });

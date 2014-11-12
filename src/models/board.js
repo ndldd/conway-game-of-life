@@ -46,9 +46,8 @@ define(function () {
 
     Board.prototype.createEmptyBoard = function () {
         this.board = [];
-
-
     };
+
     Board.prototype.makeRandom = function () {
 
         this.board = [];
@@ -77,7 +76,7 @@ define(function () {
 
     };
     Board.prototype.makeNextGeneration = function () {
-//    console.log(this.board);
+
 
 
         this.init(this.rows, this.columns, true);
@@ -89,13 +88,11 @@ define(function () {
             this.counter.add();
         }
         this.notifyObservers();
-//    console.log('this',this.board);
-//    console.log( 'next',this.nextGeneration);
-//    console.log( 'this',this.board);
 
     };
 
     Board.prototype.notifyObservers = function () {
+
 
         for (var i = 0; i < this.observers.length; i++) {
             this.observers[i]();
@@ -153,13 +150,7 @@ define(function () {
         }
 
 
-//    if( this.rowExists(x-1)){
-
-//        neighbours.push()
-//    }
-
-
-        // row above
+        // row above current cell
         if (this.rowExists(x - 1)) {
             if (this.columnExists(y - 1)) {
                 neighbours.push(this.board[x - 1][y - 1]);
@@ -181,7 +172,7 @@ define(function () {
             neighbours.push(this.board[x][y + 1]);
         }
 
-        // row below
+        // row below current cell
         if (this.rowExists(x + 1)) {
             if (this.columnExists(y - 1)) {
                 neighbours.push(this.board[x + 1][y - 1]);
@@ -197,7 +188,7 @@ define(function () {
         }
 
 
-//    if (this.columnExists())
+
 
 
         return neighbours;
@@ -237,7 +228,9 @@ define(function () {
         this.observers.push(callback);
 
     };
+
     Board.prototype.removeSubscriber = function (callback) {
+        this.observers=[];
         for (var i = this.observers.length-1; i >= 0; i--) {
             if (this.observers[i] === callback) {
                 this.observers.splice(i,1);

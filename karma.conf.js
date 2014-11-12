@@ -1,5 +1,4 @@
 // Karma configuration
-// Generated on Mon Oct 06 2014 23:18:14 GMT+0200 (CEST)
 
 module.exports = function (config) {
     config.set({
@@ -17,26 +16,20 @@ module.exports = function (config) {
 
             files: [
                 'test-main.js',
-//                'js/text.js',
-//                'test_fixtures/**/*.html',     // html
                 'index.html',     // html
-//                {pattern: 'js/**/*.html', included: false},
-                {pattern: 'js/**/*.js', included: false},
-                {pattern: 'js/**/*.html', watched: true, included: false, served: true},
+                {pattern: 'src/**/*.js', included: false},
+                {pattern: 'src/**/*.html', watched: true, included: false, served: true},
                 {pattern: 'test/**/*.spec.js', included: false}                             ,
-//                {pattern: 'js/views/*.html', included: true, served:true},
                 {pattern: 'css/**/*.css', included: false, served: true},
             ],
 
             proxies: {
-                '/css/': '/base/css/',                   // 404 warning bc css from index file not found
-//                '/views/': '/base/views/'                   // 404 warning bc css from index file not found
+                '/css/': '/base/css/',                   // 404 warning because css from index file not found
             },
-
 
             // list of files to exclude
             exclude: [
-                'js/main.js'
+                'src/main.js'
 
             ],
 
@@ -44,11 +37,10 @@ module.exports = function (config) {
             // preprocess matching files before serving them to the browser
             // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
             preprocessors: {
-//                '**/*.html': ['html2js']
+//                '**/*.html': ['html2js'],
                 'index.html': ['html2js']
 //                '**/*.html': []
             },
-
 
 
             // test results reporter to use
@@ -76,7 +68,10 @@ module.exports = function (config) {
 
             // start these browsers
             // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-            browsers: ['Chrome'],
+            browsers: [
+                'Chrome' ,
+//                'Firefox'
+            ],
 
 
             // Continuous Integration mode

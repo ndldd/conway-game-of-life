@@ -4,7 +4,7 @@
  *
  * @namespace conway.view
  */
-define(['text!./viewtemplate.html'], function (template) {
+define(['text!./viewtemplate.html'], function (htmlTemplate) {
 
     /**
      * Class for Creating an Board consisting of DIVs
@@ -15,17 +15,17 @@ define(['text!./viewtemplate.html'], function (template) {
      * @constructor
      */
     var View = function (board, counter, specialTemplate) {
-//        template = require(['text!./jsviewtemplate.html']);
+
 
         var container = document.getElementById('view-container');
         var div = document.createElement('div')
 
-        if (specialTemplate) {
-            template = specialTemplate;
-        }
+        var template = specialTemplate ? specialTemplate : htmlTemplate;
+
         div.innerHTML = template;
         container.appendChild(div);
 
+        template = null;
 
         if (board) {
             this.board = board;
@@ -92,14 +92,22 @@ define(['text!./viewtemplate.html'], function (template) {
         var container = document.getElementById('view-container');
         var div = document.createElement('div');
         div.id = 'generationCounter';
-        div.innerText = 'Generation: ' + this.counter.getCount();
+
+          var newContent = document.createTextNode('Generation: ' + this.counter.getCount());
+        div.appendChild(newContent);
+
+
         container.appendChild(div);
+
 
     };
     View.prototype.destroy = function () {
-        var container = document.getElementById('view-container');
-        container.innerHTML = "";
+
+
+        var container = document.getElementById('view-container').innerHTML = "";
+
         this.unsubscribe(this.board);
+        container.innerHTML = "";
     };
 
     View.prototype.updateCounterDisplay = function () {
@@ -108,20 +116,32 @@ define(['text!./viewtemplate.html'], function (template) {
         this.addCounter();
     };
     View.prototype.removeCounterDisplay = function () {
-        var htmlCounter = document.getElementById('generationCounter');
-        htmlCounter.parentNode.removeChild(htmlCounter);
+        try {
+
+            var htmlCounter = document.getElementById('generationCounter');
+            htmlCounter.parentNode.removeChild(htmlCounter);
+        }
+        catch (TypeError) {
+
+        }
     };
 
     View.prototype.subscribe = function (board) {
 
+        if (!this.registeredCallback) {
 
-        board.addSubscriber(this.draw.bind(this));
+            var callback = this.draw.bind(this);
+            board.addSubscriber(callback);
+            this.registeredCallback = callback;
+        }
 
     };
 
     View.prototype.unsubscribe = function (board) {
-        this.board.removeSubscriber(this.draw.bind(this));
 
+
+        board.removeSubscriber(this.registeredCallback);
+        this.registeredCallback = null;
 
     };
     return View;

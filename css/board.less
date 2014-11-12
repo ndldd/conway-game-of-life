@@ -1,47 +1,45 @@
-
 @tileSize: 5px;
 @board-width: @tileSize * 150;
 
 body {
-//  line-height: 3px ;
+  //  line-height: 3px ;
 }
 
-#generationCounter{
-//  line-height: 20px;
+#generationCounter {
+  //  line-height: 20px;
 }
-div.row{
-//  display: inline-block;
+
+div.row {
+  //  display: inline-block;
 }
 
 .board {
-    line-height: 3px ;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.board {
+  line-height: 3px;
   align: center;
   min-width: @board-width;
-//  width: 300px;
-
+  border: 2px;
   display: block;
 
-//    padding-left: 0;
-//    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-//    width: 800px;
 
 }
+
+canvas.board {
+  margin-top: 10px;
+  display: block;
+
+}
+
 .tile {
 
   height: @tileSize;
   width: @tileSize;
-//  display: inline-block;
   border: 1px solid lightgrey;
-//  margin-top: -5px;
   display: inline-block;
-//    float: left;
-//  width: 10px;
-  margin: 0;
-  padding: 0;
-//  padding: 2px;
 
 }
 

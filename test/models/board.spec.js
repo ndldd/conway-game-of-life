@@ -2,7 +2,7 @@
  * Created by thomas on 03.10.14.
  */
 
-define(['js/models/board', 'js/models/counter' ], function (Board, Counter) {
+define(['src/models/board', 'src/models/counter' ], function (Board, Counter) {
 //var jasmine;
     beforeEach(function () {
     });

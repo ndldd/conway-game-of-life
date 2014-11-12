@@ -1,9 +1,16 @@
 .board {
-  line-height: 3px ;
-  align: center;
-  min-width: 750px;
   margin-left: auto;
   margin-right: auto;
+}
+div.board {
+  line-height: 3px;
+  align: center;
+  min-width: 750px;
+  border: 2px;
+  display: block;
+}
+canvas.board {
+  margin-top: 10px;
   display: block;
 }
 .tile {
@@ -11,16 +18,12 @@
   width: 5px;
   border: 1px solid lightgrey;
   display: inline-block;
-  margin: 0;
-  padding: 0;
 }
 div.on {
   height: 5px;
   width: 5px;
   border: 1px solid lightgrey;
   display: inline-block;
-  margin: 0;
-  padding: 0;
   background-color: black;
   border-color: gray;
 }
@@ -29,8 +32,6 @@ div.off {
   width: 5px;
   border: 1px solid lightgrey;
   display: inline-block;
-  margin: 0;
-  padding: 0;
   background-color: white;
   border-color: lightgrey;
 }

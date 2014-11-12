@@ -1,4 +1,4 @@
-define(['js/views/canvasview', 'js/models/counter', 'js/app.constants' ], function (View, Counter, constants) {
+define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants' ], function (View, Counter, constants) {
 
     var canvasTemplate = ' <button id="start-btn" onclick="conway.start()">Start</button> <button id="stop-btn" onclick="conway.stop()">Stopp</button> <button id="reset-btn" onclick="conway.reset()">Reset</button> <canvas class="board" id="board"> </canvas>'
 
@@ -43,22 +43,16 @@ define(['js/views/canvasview', 'js/models/counter', 'js/app.constants' ], functi
                 canvas = {getContext: jasmine.createSpy('canvasSpy').and.returnValue(context)};
                 canvas.style = {};
             });
-            it("calls method to create a background ", function () {
+            it("calls method to create a background  ", function () {
                 var spy = spyOn(view, 'drawBoardBackground');
 
-
-                canvas.width = 3;
-                canvas.height = 3;
-
                 view.displayBoard([
-                    [1]
+                    [1],
                 ], canvas);
 
-                expect(view.drawBoardBackground).toHaveBeenCalledWith(context, canvas.width, canvas.height);
+                expect(view.drawBoardBackground).toHaveBeenCalled();
             });
-            it("has a board with tiles", function () {
 
-            });
             it("gets dimensions from the board", function () {
                 var board = [
                     [1, 1],
@@ -87,7 +81,7 @@ define(['js/views/canvasview', 'js/models/counter', 'js/app.constants' ], functi
                 view.drawBoardBackground(context, bgWidth, bgHeight);
 
                 expect(context.fillStyle).toBe('lightgray');
-                expect(context.fillRect).toHaveBeenCalledWith(0, 0, 500, 500);
+                expect(context.fillRect).toHaveBeenCalledWith(0, 0, 500+PADDING, 500+PADDING);
             });
 
 
@@ -129,9 +123,10 @@ define(['js/views/canvasview', 'js/models/counter', 'js/app.constants' ], functi
                     view.drawRow(null, [0, 0, 0], rowNumber);
 
                     var PADDING = 1;
-                    expect(view.drawTile.calls.argsFor(0)).toEqual([null, 0, 0, TILE_SIZE, false]);
-                    expect(view.drawTile.calls.argsFor(1)).toEqual([null, PADDING + TILE_SIZE, 0, TILE_SIZE, false]);
-                    expect(view.drawTile.calls.argsFor(2)).toEqual([null, 2 * (PADDING + TILE_SIZE), 0, TILE_SIZE, false]);
+                    var topBorder = leftBorder = PADDING;
+                    expect(view.drawTile.calls.argsFor(0)).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
+                    expect(view.drawTile.calls.argsFor(1)).toEqual([null, leftBorder + PADDING + TILE_SIZE, topBorder, TILE_SIZE, false]);
+                    expect(view.drawTile.calls.argsFor(2)).toEqual([null, leftBorder + 2 * (PADDING + TILE_SIZE), topBorder, TILE_SIZE, false]);
                 });
 
                 it("draws tile in rows below each other", function () {
@@ -144,13 +139,14 @@ define(['js/views/canvasview', 'js/models/counter', 'js/app.constants' ], functi
 
                     var firstCall = view.drawTile.calls.argsFor(0)
                     firstCall[0] = null;
-                    expect(firstCall).toEqual([null, 0, 0, TILE_SIZE, false]);
+                    var topBorder= leftBorder = PADDING;
+                    expect(firstCall).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
 
 
                     var secondCall = view.drawTile.calls.argsFor(1);
 
                     secondCall[0] = null;
-                    expect(secondCall).toEqual([null, 0 , TILE_SIZE + PADDING, TILE_SIZE, false]);
+                    expect(secondCall).toEqual([null, leftBorder , topBorder + TILE_SIZE + PADDING, TILE_SIZE, false]);
 
 
                 });

@@ -1,4 +1,4 @@
-define(['js/models/counter'], function (Counter) {
+define(['src/models/counter'], function (Counter) {
 
 //    console.log(counter);
 
