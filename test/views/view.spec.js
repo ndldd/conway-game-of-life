@@ -1,4 +1,5 @@
 define(['src/views/view', 'src/models/counter'], function (View, Counter) {
+
     // test specific to the html-div version of the view only
 
 

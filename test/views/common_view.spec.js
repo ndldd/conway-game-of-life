@@ -1,5 +1,7 @@
 define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html', ], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
 
+    // tests for both the html-div view and its subclass the canvas view
+
     var runSuites = function (View, Counter, template) {
 
         describe("view adds a #board element on init", function () {
