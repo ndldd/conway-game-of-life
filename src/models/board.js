@@ -75,9 +75,7 @@ define(function () {
         return this.board;
 
     };
-    Board.prototype.makeNextGeneration = function () {
-
-
+    Board.prototype.makeNextGeneration = function (rows, columns) {
 
         this.init(this.rows, this.columns, true);
 
@@ -188,9 +186,6 @@ define(function () {
         }
 
 
-
-
-
         return neighbours;
 
 
@@ -230,10 +225,10 @@ define(function () {
     };
 
     Board.prototype.removeSubscriber = function (callback) {
-        this.observers=[];
-        for (var i = this.observers.length-1; i >= 0; i--) {
+        this.observers = [];
+        for (var i = this.observers.length - 1; i >= 0; i--) {
             if (this.observers[i] === callback) {
-                this.observers.splice(i,1);
+                this.observers.splice(i, 1);
             }
         }
     };

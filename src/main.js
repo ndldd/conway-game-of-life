@@ -17,9 +17,8 @@ require.config({
 
 
 require([ './conwayapp'], function(App){
-    app = new App()
+    conway = new App();
+    conway.run();
 
-    app.run();
-    conway = app;
 
 });

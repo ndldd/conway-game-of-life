@@ -1,28 +1,25 @@
 define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Controller, Counter, View) {
     var controller;
     beforeEach(function () {
-        controller = new Controller;
+        controller = new Controller();
     });
     describe('Controller', function () {
 
         describe("after instantiation ", function () {
 
-            var counter, controller, view;
+            var controller, view;
             beforeEach(function () {
                 document.body.innerHTML = window.__html__['index.html'];
                 view = new View();
-//                counter = new Counter();
-//                controller = new Controller();
 
-//                spy = spyOn(controller, 'startSimulation');
-                controller = jasmine.createSpyObj('controller', ['startSimulation', 'stopSimulation', 'resetSimulation'])
+                controller = jasmine.createSpyObj('controller', ['startSimulation', 'stopSimulation', 'resetSimulation']);
 
                 window.conway = {
                     controller: controller,
                     start: controller.startSimulation.bind(controller),
                     stop: controller.stopSimulation.bind(controller),
-                    reset: controller.resetSimulation.bind(controller),
-                }
+                    reset: controller.resetSimulation.bind(controller)
+                };
             });
 
 
@@ -42,7 +39,7 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
                 });
 
                 it("on reset", function () {
-                    button = document.getElementById('reset-btn');
+                    var button = document.getElementById('reset-btn');
                     button.onclick();
 
                     expect(controller.resetSimulation).toHaveBeenCalled();
@@ -52,8 +49,9 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
             });
 
             describe("messages simRunner to ", function () {
+                var simRunner;
                 beforeEach(function () {
-                    simRunner = jasmine.createSpyObj('simRunner', ['start', 'stop', 'reset'])
+                    simRunner = jasmine.createSpyObj('simRunner', ['start', 'stop', 'reset']);
                     controller = new Controller(null, simRunner);
                 });
 
@@ -92,8 +90,9 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
 
         });
         describe("on set View", function () {
+            var view;
             it("messages to draw the new view", function () {
-                var view = {draw: jasmine.createSpy('spy', 'draw')};
+                view = {draw: jasmine.createSpy('spy')};
 
                 controller.setView(view);
 
@@ -116,17 +115,13 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
             var counter;
             var view;
             beforeEach(function () {
-//            document.body.innerHTML = window.__html__['test_fixtures/body.html'];
-//                document.body.innerHTML = window.__html__['index.html'];
+
                 counter = new Counter();
                 view = new View({}, counter);
                 controller = new Controller(counter, {}, view);
             });
 
             it('adds counter', function () {
-
-//                expect(document.getElementById('generationCounter')).toBe(null);
-
 
                 spyOn(view, 'addCounter');
                 controller.displayCounter();
@@ -152,14 +147,14 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
 
             it("stops sim runner on stop event", function () {
 
+
                 var simRunner = { stop: { } };
 
-                controller = new Controller(null, simRunner)
-                var spy = spyOn(simRunner, 'stop');
+                controller = new Controller(null, simRunner);
+                spyOn(simRunner, 'stop');
 
                 controller.stopSimulation();
                 expect(simRunner.stop).toHaveBeenCalled();
-
 
             });
 

@@ -45,15 +45,17 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                 describe('drawing', function () {
                     it('board is not empty', function () {
 
+                        var board;
                         view.displayBoard(mockBoard);
-                        var board = document.getElementById('board');
+                        board = document.getElementById('board');
                         expect(board.innerHTML.trim()).not.toEqual('');
 
                     });
 
-                })
+                });
 
                 it('draws board with two rows', function () {
+                    var board;
                     mockBoard = [
                         [0, 0],
                         [0, 0]
@@ -61,14 +63,15 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                     view.displayBoard(mockBoard);
 
-                    var board = document.getElementById('board');
+                    board = document.getElementById('board');
                     expect(board.children.length).toBe(2);
                     expect(board.children[0].className).toBe('row');
                     expect(board.children[1].className).toBe('row');
 
-                })
+                });
 
                 it('rows have tiles', function () {
+                    var board;
                     mockBoard = [
                         [0, 0],
                         [0, 0]
@@ -76,7 +79,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                     view.displayBoard(mockBoard);
 
-                    var board = document.getElementById('board');
+                    board = document.getElementById('board');
                     expect(board.children[0].children.length).toBe(2);
 
                     expect(board.children[0].children[0].className).toBe('tile');
@@ -85,6 +88,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                 });
 
                 it('tiles have ".on" when their state is 1', function () {
+                    var board;
                     mockBoard = [
                         [1, 1],
                         [1, 1]
@@ -92,7 +96,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                     view.displayBoard(mockBoard);
 
-                    var board = document.getElementById('board');
+                    board = document.getElementById('board');
 
 
                     expect(board.children[0].children[0].className).toBe('tile on');
@@ -106,15 +110,17 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     view = new View();
                     document.innerHTML = window.__html__['index.html'];
 
-                })
+                });
 
                 afterEach(function () {
                     view = null;
                     document.innerHTML = '';
-                })
+                });
 
 
                 it("redraws ", function () {
+                    var htmlBoard;
+                    var newBoard;
                     view = new View([
                         [0, 0],
                         [0, 0]
@@ -124,7 +130,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                         [1, 1],
                         [1, 1]
                     ];
-                    view.addCounter()
+                    view.addCounter();
 
                     view.displayBoard(view.board);
                     view.board.board = newBoard;
@@ -132,7 +138,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     view.draw();
 
 
-                    var htmlBoard = document.getElementById('board');
+                    htmlBoard = document.getElementById('board');
 
 
                     expect(htmlBoard.children[0].children[0].className).toBe('tile on');
@@ -143,8 +149,9 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
             });
             describe("on draw ", function () {
                 it("updates the counter", function () {
+
                     view.board = {};
-                    var spy = spyOn(view, 'updateCounterDisplay');
+                    spyOn(view, 'updateCounterDisplay');
                     view.draw();
 
                     expect(view.updateCounterDisplay).toHaveBeenCalled();

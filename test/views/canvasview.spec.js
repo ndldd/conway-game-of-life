@@ -10,18 +10,19 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
             var view;
 
             beforeEach(function () {
-                view = new CanvasView();
+                view = new View();
             });
             it("is a subclass of view", function () {
                 expect(view instanceof View).toBe(true);
             });
 
             it("is class Canvas View", function () {
-                expect(view instanceof CanvasView).toBe(true);
+                expect(view instanceof View).toBe(true);
             });
         });
 
         describe("on instantiation takes canvas template injection", function () {
+            var view;
             it("view has a canvas board", function () {
                 view = new View({}, {}, canvasTemplate);
 
@@ -31,7 +32,7 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
         });
 
 
-        describe("on displayboard,", function () {
+        describe("when displayboard is called,", function () {
             var view;
             var canvas;
             var context;
@@ -44,10 +45,10 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 canvas.style = {};
             });
             it("calls method to create a background  ", function () {
-                var spy = spyOn(view, 'drawBoardBackground');
+                spyOn(view, 'drawBoardBackground');
 
                 view.displayBoard([
-                    [1],
+                    [1]
                 ], canvas);
 
                 expect(view.drawBoardBackground).toHaveBeenCalled();
@@ -59,7 +60,7 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                     [1, 1],
                     [1, 1]
                 ];
-                var spy = spyOn(view, 'calculateCanvasSize');
+                spyOn(view, 'calculateCanvasSize');
 
                 view.displayBoard(board);
                 expect(view.calculateCanvasSize).toHaveBeenCalledWith(board, TILE_SIZE, PADDING);// displayBoard
@@ -81,12 +82,12 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 view.drawBoardBackground(context, bgWidth, bgHeight);
 
                 expect(context.fillStyle).toBe('lightgray');
-                expect(context.fillRect).toHaveBeenCalledWith(0, 0, 500 + PADDING, 500 + PADDING);
+                expect(context.fillRect).toHaveBeenCalledWith(0, 0, bgWidth + PADDING, bgHeight + PADDING);
             });
 
 
             it("draws a row", function () {
-                var spy = spyOn(view, 'drawRow');
+                spyOn(view, 'drawRow');
                 view.displayBoard([
                     [1]
                 ], canvas);
@@ -94,7 +95,7 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
             });
 
             it("draw multiple rows", function () {
-                var spy = spyOn(view, 'drawRow');
+                spyOn(view, 'drawRow');
                 view.displayBoard([
                     [0],
                     [0]
@@ -119,17 +120,24 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 });
                 it("draws tiles next to each other", function () {
 
+                    var topBorder, leftBorder, PADDING;
                     var rowNumber = 0;
+
                     view.drawRow(null, [0, 0, 0], rowNumber);
 
-                    var PADDING = 1;
-                    var topBorder = leftBorder = PADDING;
+                    PADDING = 1;
+                    topBorder = leftBorder = PADDING;
+
                     expect(view.drawTile.calls.argsFor(0)).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
                     expect(view.drawTile.calls.argsFor(1)).toEqual([null, leftBorder + PADDING + TILE_SIZE, topBorder, TILE_SIZE, false]);
                     expect(view.drawTile.calls.argsFor(2)).toEqual([null, leftBorder + 2 * (PADDING + TILE_SIZE), topBorder, TILE_SIZE, false]);
                 });
 
                 it("draws tile in rows below each other", function () {
+                    var secondCall;
+                    var topBorder,leftBorder;
+
+                    var firstCall;
                     view.displayBoard([
                         [0],
                         [0]
@@ -137,13 +145,13 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
 
                     context = document.createElement('canvas').getContext('2d');
 
-                    var firstCall = view.drawTile.calls.argsFor(0)
+                    firstCall = view.drawTile.calls.argsFor(0);
                     firstCall[0] = null;
-                    var topBorder = leftBorder = PADDING;
+                    topBorder = leftBorder = PADDING;
                     expect(firstCall).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
 
 
-                    var secondCall = view.drawTile.calls.argsFor(1);
+                    secondCall = view.drawTile.calls.argsFor(1);
 
                     secondCall[0] = null;
                     expect(secondCall).toEqual([null, leftBorder , topBorder + TILE_SIZE + PADDING, TILE_SIZE, false]);
@@ -152,14 +160,14 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 });
             });
             it("drawTiles fills tiles", function () {
-                var TILE_SIZE
+                var TILE_SIZE;
                 view.drawTile(context, 1, 2, TILE_SIZE);
 
                 expect(context.fillRect).toHaveBeenCalledWith(1, 2, TILE_SIZE, TILE_SIZE);
 
             });
             it("drawsTiles as alive", function () {
-                var TILE_SIZE
+                var TILE_SIZE;
                 view.drawTile(context, 1, 2, TILE_SIZE, false);
                 expect(context.fillStyle).toBe('white');
                 view.drawTile(context, 1, 2, TILE_SIZE, true);

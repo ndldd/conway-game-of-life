@@ -1,0 +1,17 @@
+{
+    "undef": true,
+    "unused": true,
+    "predef": [
+        "conway",
+        "window",
+        "document",
+        "jasmine",
+        "define",
+        "beforeEach",
+        "afterEach",
+        "describe",
+        "it",
+        "expect",
+        "spyOn"
+    ]
+}

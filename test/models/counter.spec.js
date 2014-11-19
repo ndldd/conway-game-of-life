@@ -1,7 +1,5 @@
 define(['src/models/counter'], function (Counter) {
 
-//    console.log(counter);
-
     describe('counter', function () {
 
         var newCounter;
@@ -21,8 +19,8 @@ define(['src/models/counter'], function (Counter) {
         });
 
         it('instances do not share value', function(){
-            second = new Counter();
-            newCounter.add()
+            var second = new Counter();
+            newCounter.add();
             expect(second.getCount()).toBe(0);
             second.add();
             expect(second.getCount()).toBe(1);
@@ -34,7 +32,7 @@ define(['src/models/counter'], function (Counter) {
             newCounter.add();
             newCounter.reset();
             expect(newCounter.getCount()).toBe(0);
-        })
+        });
 
     });
 

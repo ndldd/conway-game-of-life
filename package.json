@@ -4,7 +4,6 @@
   "description": "Conway Game of Life demo app",
   "main": "karma.conf.js",
   "directories": {
-    "doc": "doc",
     "test": "test"
   },
   "dependencies": {
@@ -21,12 +20,12 @@
     "http-server": "~0.7.2"
   },
   "scripts": {
-    "test": "karma start",
-    "start": "node_modules/http-server/bin/http-server -p 8000"
+    "test": "node_modules/karma/bin/karma start",
+    "start": "node_modules/http-server/bin/http-server -a 127.0.0.1 -p 8000"
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:ndldd/oop.git"
+    "url": " https://github.com/ndldd/conway-game-of-life"
   },
   "author": "",
   "license": "BSD-2-Clause"

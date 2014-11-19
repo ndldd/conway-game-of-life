@@ -41,18 +41,19 @@ define(['src/models/simrunner', 'src/conwayapp.constants' ], function (SimRunner
                 runner = new SimRunner(board);
 //                board.makeNextGeneration().reset()
 
-            })
+            });
             afterEach(function () {
                 board.makeNextGeneration.calls.reset();
-            })
+            });
 
             it("on start calls its board", function () {
 
+                var board;
                 spy = jasmine.createSpy('makeNextGeneration');
 
 
-                var board = {makeNextGeneration: spy, makeRandom: function () {
-                }}
+                board = {makeNextGeneration: spy, makeRandom: function () {
+                }};
 
 
                 runner = new SimRunner(board);
@@ -90,7 +91,7 @@ define(['src/models/simrunner', 'src/conwayapp.constants' ], function (SimRunner
                 expect(board.makeNextGeneration.calls.count()).toEqual(2);
 
 
-                runner.stop()
+                runner.stop();
                 jasmine.clock().tick(SIM_DURATION+1);
                 expect(board.makeNextGeneration.calls.count()).toEqual(2);
 
@@ -112,12 +113,9 @@ define(['src/models/simrunner', 'src/conwayapp.constants' ], function (SimRunner
             });
             it("on reset makes a random board", function () {
 
-
-                var spy= spyOn(board, 'makeRandom');
-
+                spyOn(board, 'makeRandom');
 
                 runner.reset();
-
 
                 expect(board.makeRandom).toHaveBeenCalled();
 

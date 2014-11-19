@@ -12,6 +12,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
         describe('building collaborators', function () {
             beforeEach(function () {
 
+
             });
 
 
@@ -57,8 +58,10 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
             });
 
 
-            it("controller is created", function () {
-                /// TODO:controller
+            it("app has a controller", function () {
+
+                app.init();
+                expect(app.controller).toBeDefined();
             });
 
         });
@@ -93,10 +96,10 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
 
 
         describe("creating a View", function () {
-            var board;
+
+            var view;
             beforeEach(function () {
-                app.board = {addSubscriber: function () {
-                }};
+                app.board = {addSubscriber: function () { }};
             });
             it("createView when passed a View constructor returns a View ", function () {
                 view = app.createView(View);
@@ -105,7 +108,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
                 expect(view instanceof CanvasView).toBe(false);
 
             });
-            it("createView when passed a CavasView constructor returns a CanvasView ", function () {
+            it("createView when passed a CanvasView constructor returns a CanvasView ", function () {
 
                 view = app.createView(CanvasView);
 
@@ -135,7 +138,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
             });
             it("tells current View to destroy itself", function () {
 
-                app.view = {destroy: jasmine.createSpy('spy', 'destroy')};
+                app.view = {destroy: jasmine.createSpy('spy')};
 
                 app.controller = {setView : function () { }};
                 app.switchView();
@@ -149,14 +152,14 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
 
                 app.view.destroy = function () {
                 };
-                app.createView = jasmine.createSpy('spy', 'createView');
+                app.createView = jasmine.createSpy('spy');
 
 
                 app.currentView = 'HtmlView';
                 app.switchView();
 
 
-                expect(app.createView).toHaveBeenCalledWith(CanvasView, canvasViewTemplate)
+                expect(app.createView).toHaveBeenCalledWith(CanvasView, canvasViewTemplate);
                 expect(app.currentView).toBe('CanvasView');
 
 
@@ -164,7 +167,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
             it("creates a HtmlView set currentView", function () {
                 app.view.destroy = function () {
                 };
-                app.createView = jasmine.createSpy('spy', 'createView');
+                app.createView = jasmine.createSpy('spy');
 
                 app.currentView = 'CanvasView';
                 app.switchView();
@@ -177,13 +180,14 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
 
         });
         describe("on switch View", function () {
+            var view;
             it("calls to select a new view ", function () {
 
             });
-            it("controller gets a  referecence to the new view", function () {
+            it("controller gets a  reference to the new view", function () {
 
-                app.controller = {setView : jasmine.createSpy('spy', 'setView')};
-                app.view= {destroy: function () { }}
+                app.controller = {setView : jasmine.createSpy('spy')};
+                app.view= {destroy: function () { }};
                 view = app.switchView()  ;
 
 

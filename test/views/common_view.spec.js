@@ -1,16 +1,18 @@
-define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html', ], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
+define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html' ], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
 
     // tests for both the html-div view and its subclass the canvas view
 
-    var runSuites = function (View, Counter, template) {
+    var runSuites = function (View, Counter) {
 
         describe("view adds a #board element on init", function () {
 
             it('has a #board', function () {
+                var board;
+                var view;
                 document.innerHTML = window.__html__['index.html'];
 
-                var view = null;
-                var board = document.getElementById('board');
+                view = null;
+                board = document.getElementById('board');
                 expect(board).toBeNull();
 
                 view = new View();
@@ -55,20 +57,20 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
             describe(' after instantiation', function () {
                 describe('on subscribe adds itself to Board observers', function () {
 
+                    var view;
                     beforeEach(function () {
 //                    var board
                     });
                     it('calls board.addSubscriber', function () {
-                        var board = { removeSubscriber: function () {
-                        }}
-                        view = new View(board);
-                        var board = {addSubscriber: function () {
+
+                        view = new View();
+                        var newBoard = {addSubscriber: function () {
                         }};
-                        var spy = spyOn(board, 'addSubscriber')
+                        spyOn(newBoard, 'addSubscriber');
 
-                        view.subscribe(board);
+                        view.subscribe(newBoard);
 
-                        expect(board.addSubscriber).toHaveBeenCalled();
+                        expect(newBoard.addSubscriber).toHaveBeenCalled();
                     });
 
                     it("keeps a reference to the bound callback", function () {
@@ -85,10 +87,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
 
                         var board = {addSubscriber: function () {
                         }};
-                        var spy = spyOn(board, 'addSubscriber');
+                        spyOn(board, 'addSubscriber');
 
                         view.registeredCallback = function () {
-                        }
+                        };
 
                         view.subscribe(board);
 
@@ -112,11 +114,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
 
                 });
                 describe("on destroy ", function () {
+                    var container;
                     it("removes itself from the container", function () {
                         container = document.getElementById('view-container');
                         expect(container.innerHTML).not.toBe('');
                         view.board = {removeSubscriber: function () {
-                        }}
+                        }};
 
                         view.destroy();
 
@@ -125,7 +128,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
 
                     it("unsubscribes from model changes", function () {
-                        var spy = spyOn(view, 'unsubscribe');
+                        spyOn(view, 'unsubscribe');
                         view.board = {};
                         view.destroy();
                         expect(view.unsubscribe).toHaveBeenCalledWith(view.board);
@@ -134,7 +137,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                 });
                 describe("on unsubscribe", function () {
                     it("calls board.removeSubscriber with the saved callback reference", function () {
-                        view.board = {removeSubscriber: jasmine.createSpy('spy', 'removeSubscriber')}
+                        view.board = {removeSubscriber: jasmine.createSpy('spy', 'removeSubscriber')};
 
                         var callback = view.registeredCallback = function () {
                         };
@@ -150,13 +153,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view = new View();
                         document.innerHTML = window.__html__['index.html'];
 
-
-                    })
+                    });
 
                     afterEach(function () {
                         view = null;
                         document.innerHTML = '';
-                    })
+                    });
 
                     it("has a start button", function () {
                         var btn = document.getElementById('start-btn');
@@ -210,10 +212,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
 
                     it("view gets count from counter", function () {
-//                    var counter = {getCount: {}}
-//                    spyOn(counter, 'getCount');
-//                    view.addCounter(counter);
-//                    expect(counter.getCount).toHaveBeenCalled();
+                        var counter = {getCount: {}};
+                        spyOn(counter, 'getCount');
+                        view.counter = counter;
+
+                        view.addCounter();
+                        expect(counter.getCount).toHaveBeenCalled();
 
                     });
 
@@ -249,15 +253,16 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view = new View();
                         document.innerHTML = window.__html__['index.html'];
 
-                    })
+                    });
 
                     afterEach(function () {
                         view = null;
                         document.innerHTML = '';
-                    })
+                    });
                     it("removes old board", function () {
 
 
+                        var htmlBoard;
                         view = new View([
                             [0],
                             [0]
@@ -265,18 +270,16 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view.displayBoard(view.board);
                         view.removeHtmlBoard();
 
-
-                        var htmlBoard = document.getElementById('board');
-
+                        htmlBoard = document.getElementById('board');
 
                         expect(htmlBoard.children.length).toBe(0);
-
 
                     });
 
 
                     it("updates it's counter", function () {
 
+                        var htmlCounter;
                         var counter = new Counter();
                         view = new View({}, counter);
                         view.addCounter();
@@ -291,9 +294,9 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
 
                     });
                     it("view removes old counter Display", function () {
-                        var view = new View({}, new Counter);
+                        var view = new View({}, new Counter());
 
-                        var spy = spyOn(view, 'removeCounterDisplay');
+                        spyOn(view, 'removeCounterDisplay');
                         view.addCounter();
                         view.updateCounterDisplay();
                         expect(view.removeCounterDisplay).toHaveBeenCalled();
@@ -302,7 +305,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
 
                     it("removes the old counter node", function () {
-                        var view = new View({}, new Counter);
+                        var view = new View({}, new Counter());
                         view.addCounter();
 
                         view.removeCounterDisplay();
@@ -313,12 +316,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
 
                     it("view adds new Counter Display", function () {
-                        counter = new Counter()
+                        var counter = new Counter();
 
                         var view = new View({}, counter);
                         view.addCounter();
 
-                        var spy = spyOn(view, 'addCounter');
+                        spyOn(view, 'addCounter');
 
                         view.updateCounterDisplay();
 

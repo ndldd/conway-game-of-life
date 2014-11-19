@@ -40,25 +40,35 @@ In this implementation you can switch between a "classic HTMLView" (which uses D
 * the Jasmine test framework is used together with the karma-test runner for unit testing
 
 
-# Runnnig the code locally
-* clone the project
-* from the project root directory run 
+# Runnnig the code locally  (requires nodejs installed)
 
-        npm install
+* clone the project then use:
 
-* start a development web server                                                         
-      
-        npm start
+
+    npm install
+
  
-    or run
+
+* under Linux you can then start a development web server with                                                         
+
+
+
+    npm start
+    
+        OR
  
-        nodejs node_modules/http-server/bin/http-server
+    nodejs node_modules/http-server/bin/http-server
  
         
-# Running the tests:
-run
-
-        karma start
+# Running the tests
+ (requires chrome to be installed)
+      
+      
+    npm test
+    
+        OR       
+    
+    nodejs node_modules/karma/bin/karma start
         
         
 
