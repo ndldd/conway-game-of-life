@@ -1,11 +1,8 @@
-define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html' ], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
+define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!src/views/canvasviewtemplate.html'], function (htmlView, Counter, CanvasView, canvasViewTemplate) {
 
     // tests for both the html-div view and its subclass the canvas view
-
     var runSuites = function (View, Counter) {
-
         describe("view adds a #board element on init", function () {
-
             it('has a #board', function () {
                 var board;
                 var view;
@@ -20,10 +17,9 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                 expect(board).not.toBeNull();
 
             });
-
         });
-        describe('View', function () {
 
+        describe('View', function () {
             var view;
 
             beforeEach(function () {
@@ -36,27 +32,27 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                 document.innerHTML = '';
             });
 
-
             describe('on instantiation creates a container element ', function () {
                 var container;
-                beforeEach(function () {
 
+                beforeEach(function () {
                     container = document.getElementById('view-container');
                     view = new View();
                 });
+
                 it('there is a view-container in the document', function () {
                     expect(container).toBeDefined();
                 });
+
                 it('adds board', function () {
                     var board = document.getElementById('board');
+
                     expect(board).toBeDefined();
                 });
             });
 
-
             describe(' after instantiation', function () {
                 describe('on subscribe adds itself to Board observers', function () {
-
                     var view;
                     beforeEach(function () {
 //                    var board
@@ -64,8 +60,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     it('calls board.addSubscriber', function () {
 
                         view = new View();
-                        var newBoard = {addSubscriber: function () {
-                        }};
+                        var newBoard = {
+                            addSubscriber: function () {
+                            }
+                        };
                         spyOn(newBoard, 'addSubscriber');
 
                         view.subscribe(newBoard);
@@ -76,8 +74,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     it("keeps a reference to the bound callback", function () {
 
 
-                        var board = {addSubscriber: function () {
-                        }};
+                        var board = {
+                            addSubscriber: function () {
+                            }
+                        };
 
                         view.subscribe(board);
 
@@ -85,8 +85,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
                     it("only subscribes once / if there is not already callback registered", function () {
 
-                        var board = {addSubscriber: function () {
-                        }};
+                        var board = {
+                            addSubscriber: function () {
+                            }
+                        };
                         spyOn(board, 'addSubscriber');
 
                         view.registeredCallback = function () {
@@ -100,8 +102,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     it("removes reference on unsubscribe", function () {
 
 
-                        var board = {  removeSubscriber: function () {
-                        } };
+                        var board = {
+                            removeSubscriber: function () {
+                            }
+                        };
 
                         view.registeredCallback = function () {
                         };
@@ -118,8 +122,10 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     it("removes itself from the container", function () {
                         container = document.getElementById('view-container');
                         expect(container.innerHTML).not.toBe('');
-                        view.board = {removeSubscriber: function () {
-                        }};
+                        view.board = {
+                            removeSubscriber: function () {
+                            }
+                        };
 
                         view.destroy();
 
@@ -186,9 +192,11 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     var counter;
                     beforeEach(function () {
 
-                        counter = {getCount: function () {
-                            return 0;
-                        }};
+                        counter = {
+                            getCount: function () {
+                                return 0;
+                            }
+                        };
                         view = new View({}, counter);
                         document.innerHTML = window.__html__['index.html'];
 
@@ -326,21 +334,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view.updateCounterDisplay();
 
                         expect(view.addCounter).toHaveBeenCalled();
-
-
                     });
-
-
                 });
-
             });
         });
-
-
     };
 
     runSuites(htmlView, Counter);
     runSuites(CanvasView, Counter, canvasViewTemplate);
-
-
 });

@@ -1,17 +1,13 @@
-define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants', 'text!src/views/canvasviewtemplate.html' ], function (View, Counter, constants, canvasTemplate) {
-
+define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants', 'text!src/views/canvasviewtemplate.html'], function (View, Counter, constants, canvasTemplate) {
     // tests specific to the canvas view
-
     describe("CanvasView,", function () {
-
-
         describe("setting type properly on instantiation", function () {
-
             var view;
 
             beforeEach(function () {
                 view = new View();
             });
+
             it("is a subclass of view", function () {
                 expect(view instanceof View).toBe(true);
             });
@@ -23,33 +19,33 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
 
         describe("on instantiation takes canvas template injection", function () {
             var view;
+
             it("view has a canvas board", function () {
                 view = new View({}, {}, canvasTemplate);
 
                 expect(document.querySelector('canvas').id).toBe('board');
-
             });
         });
-
 
         describe("when displayboard is called,", function () {
             var view;
             var canvas;
             var context;
-            var TILE_SIZE = constants.tileSize;
-            var PADDING = constants.padding;
+            var tileSize = constants.tileSize;
+            var padding = constants.padding;
+
             beforeEach(function () {
                 view = new View({}, {}, canvasTemplate);
                 context = jasmine.createSpyObj('context', ['fillRect', 'fillStyle', '']);
                 canvas = {getContext: jasmine.createSpy('canvasSpy').and.returnValue(context)};
                 canvas.style = {};
             });
+
             it("calls method to create a background  ", function () {
                 spyOn(view, 'drawBoardBackground');
+                var board = [[1]];
 
-                view.displayBoard([
-                    [1]
-                ], canvas);
+                view.displayBoard(board, canvas);
 
                 expect(view.drawBoardBackground).toHaveBeenCalled();
             });
@@ -63,118 +59,119 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 spyOn(view, 'calculateCanvasSize');
 
                 view.displayBoard(board);
-                expect(view.calculateCanvasSize).toHaveBeenCalledWith(board, TILE_SIZE, PADDING);// displayBoard
-            });
-            it("calculate canvasSize", function () {
 
+                expect(view.calculateCanvasSize).toHaveBeenCalledWith(board, tileSize, padding);// displayBoard
+            });
+
+            it("calculate canvasSize", function () {
+                // todo:calculate canvas size test
             });
 
             it("gets a context object from (optional) canvas object", function () {
-
                 view.displayBoard({}, canvas);
 
                 expect(canvas.getContext).toHaveBeenCalledWith('2d');
-
             });
+
             it("drawBoardBackground creates Rect", function () {
-                var bgWidth = 500;
-                var bgHeight = 500;
-                view.drawBoardBackground(context, bgWidth, bgHeight);
+                var backgroundWidth = 500;
+                var backgroundHeight = 500;
+
+                view.drawBoardBackground(context, backgroundWidth, backgroundHeight);
 
                 expect(context.fillStyle).toBe('lightgray');
-                expect(context.fillRect).toHaveBeenCalledWith(0, 0, bgWidth + PADDING, bgHeight + PADDING);
+                expect(context.fillRect).toHaveBeenCalledWith(0, 0, backgroundWidth + padding, backgroundHeight + padding);
             });
-
 
             it("draws a row", function () {
                 spyOn(view, 'drawRow');
-                view.displayBoard([
-                    [1]
-                ], canvas);
+                var board = [[1]];
+
+                view.displayBoard(board, canvas);
+
                 expect(view.drawRow).toHaveBeenCalled();
             });
 
             it("draw multiple rows", function () {
                 spyOn(view, 'drawRow');
-                view.displayBoard([
-                    [0],
-                    [0]
-                ], canvas);
-                expect(view.drawRow.calls.count()).toBe(2);
+                var board = [[0], [0]];
 
+                view.displayBoard(board, canvas);
+
+                expect(view.drawRow.calls.count()).toBe(2);
             });
+
             describe("on drawRow", function () {
                 var spy;
+
                 beforeEach(function () {
                     spy = spyOn(view, 'drawTile');
                 });
 
-
-                it("draws array of tiles", function () {
-
+                it("draws row of tiles", function () {
                     var row = [0, 0, 0];
 
                     view.drawRow(null, row);
 
-                    expect(view.drawTile.calls.count()).toBe(3);
+                    expect(view.drawTile.calls.count()).toBe(row.length);
                 });
+
                 it("draws tiles next to each other", function () {
-
-                    var topBorder, leftBorder, PADDING;
+                    var topBorder, leftBorder, padding;
                     var rowNumber = 0;
+                    var padding = 1;
 
-                    view.drawRow(null, [0, 0, 0], rowNumber);
+                    var context = {};
+                    view.drawRow(context, [0, 0, 0], rowNumber);
 
-                    PADDING = 1;
-                    topBorder = leftBorder = PADDING;
+                    topBorder = leftBorder = padding;
 
-                    expect(view.drawTile.calls.argsFor(0)).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
-                    expect(view.drawTile.calls.argsFor(1)).toEqual([null, leftBorder + PADDING + TILE_SIZE, topBorder, TILE_SIZE, false]);
-                    expect(view.drawTile.calls.argsFor(2)).toEqual([null, leftBorder + 2 * (PADDING + TILE_SIZE), topBorder, TILE_SIZE, false]);
+                    expect(view.drawTile.calls.argsFor(0)).toEqual([context, leftBorder, topBorder, tileSize, false]);
+                    expect(view.drawTile.calls.argsFor(1)).toEqual([context, leftBorder + padding + tileSize, topBorder, tileSize, false]);
+                    expect(view.drawTile.calls.argsFor(2)).toEqual([context, leftBorder + 2 * (padding + tileSize), topBorder, tileSize, false]);
                 });
 
                 it("draws tile in rows below each other", function () {
-                    var secondCall;
-                    var topBorder,leftBorder;
+                    var topBorder, leftBorder;
+                    var firstCall, secondCall;
+                    var padding = 1;
+                    topBorder = leftBorder = padding;
+                    var board = [[0], [0]];
+                    var context = {fillRect: jasmine.createSpy()};
+                    var canvas = {getContext: jasmine.createSpy().and.returnValue(context)};
+                    canvas.style = {};
 
-                    var firstCall;
-                    view.displayBoard([
-                        [0],
-                        [0]
-                    ]);
-
-                    context = document.createElement('canvas').getContext('2d');
+                    view.displayBoard(board, canvas);
 
                     firstCall = view.drawTile.calls.argsFor(0);
-                    firstCall[0] = null;
-                    topBorder = leftBorder = PADDING;
-                    expect(firstCall).toEqual([null, leftBorder, topBorder, TILE_SIZE, false]);
-
-
                     secondCall = view.drawTile.calls.argsFor(1);
-
-                    secondCall[0] = null;
-                    expect(secondCall).toEqual([null, leftBorder , topBorder + TILE_SIZE + PADDING, TILE_SIZE, false]);
-
-
+                    expect(firstCall).toEqual([context, leftBorder, topBorder, tileSize, false]);
+                    expect(secondCall).toEqual([context, leftBorder, topBorder + tileSize + padding, tileSize, false]);
                 });
             });
+
             it("drawTiles fills tiles", function () {
-                var TILE_SIZE;
-                view.drawTile(context, 1, 2, TILE_SIZE);
+                var tileSize=3;
 
-                expect(context.fillRect).toHaveBeenCalledWith(1, 2, TILE_SIZE, TILE_SIZE);
+                view.drawTile(context, 1, 2, tileSize);
 
+                expect(context.fillRect).toHaveBeenCalledWith(1, 2, tileSize, tileSize);
             });
-            it("drawsTiles as alive", function () {
-                var TILE_SIZE;
-                view.drawTile(context, 1, 2, TILE_SIZE, false);
+
+            it("drawsTiles black when cell is alive white otherwise", function () {
+                var tileSize=4;
+                var alive = false;
+
+                view.drawTile(context, null, null, tileSize, alive);
+
                 expect(context.fillStyle).toBe('white');
-                view.drawTile(context, 1, 2, TILE_SIZE, true);
+
+                alive = true;
+
+                view.drawTile(context, null, null, tileSize, alive);
+
                 expect(context.fillStyle).toBe('black');
             });
-
-
         });
     });
 
