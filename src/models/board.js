@@ -73,7 +73,7 @@ define(function () {
         }, this);
     };
 
-    Board.prototype.rowExists = function (rowNumber) {
+    Board.prototype._rowExists = function (rowNumber) {
         if (typeof (this.board[rowNumber]) === 'undefined') {
             return false;
         } else {
@@ -81,7 +81,7 @@ define(function () {
         }
     };
 
-    Board.prototype.columnExists = function (colNumber) {
+    Board.prototype._columnExists = function (colNumber) {
         return (typeof(this.board[0]) !== 'undefined' && typeof(this.board[0][colNumber]) !== 'undefined');
     };
 
@@ -89,47 +89,44 @@ define(function () {
         this.board[x][y] = value;
     };
 
-    Board.prototype.addRightNeighbour = function (x, y, neighbours) {
-        if (this.columnExists(y + 1)) {
+    Board.prototype._addRightNeighbour = function (x, y, neighbours) {
+        if (this._columnExists(y + 1)) {
             neighbours.push(this.board[x][y + 1]);
         }
     };
 
-    Board.prototype.addLeftNeighbour = function (x, y, neighbours) {
-        if (this.columnExists(y - 1)) {
+    Board.prototype._addLeftNeighbour = function (x, y, neighbours) {
+        if (this._columnExists(y - 1)) {
             neighbours.push(this.board[x][y - 1]);
         }
     };
 
-    Board.prototype.collectRow = function (x, y, centerRow) {
+    Board.prototype._collectRow = function (x, y, centerRow) {
 
         var neighbours = [];
-        if (this.rowExists(x)) {
-            this.addLeftNeighbour(x, y, neighbours);
+        if (this._rowExists(x)) {
+            this._addLeftNeighbour(x, y, neighbours);
             if (x !== centerRow) {
                 neighbours.push(this.board[x][y]);
             }
-            this.addRightNeighbour(x, y, neighbours);
+            this._addRightNeighbour(x, y, neighbours);
         }
         return neighbours;
     };
 
     Board.prototype.getNeighbours = function (x, y) {
-
-        if (!this.columnExists(y) || !this.rowExists(x)) {
+        if (!this._columnExists(y) || !this._rowExists(x)) {
             return undefined;
         }
         var all = [];
-        all = all.concat(this.collectRow(x - 1, y, x));
-        all = all.concat(this.collectRow(x, y, x));
-        all = all.concat(this.collectRow(x + 1, y, x));
+        all = all.concat(this._collectRow(x - 1, y, x));
+        all = all.concat(this._collectRow(x, y, x));
+        all = all.concat(this._collectRow(x + 1, y, x));
 
         return all;
     };
 
-
     Board.prototype.calculateCellSurvival = function (neighbourList, alive) {
-//    if status =
         if (!Array.isArray(neighbourList) || typeof(status) === "undefined") {
             return undefined;
         }

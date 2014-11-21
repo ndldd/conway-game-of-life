@@ -102,7 +102,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             it('accessing neighbours should not be allowed ', function () {
                 board = new Board(0, 0);
 
-                expect(board.rowExists(0)).toBe(false);
+                expect(board._rowExists(0)).toBe(false);
             });
         });
 
@@ -115,16 +115,16 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
 
             it("first row exist", function () {
-                expect(board.rowExists(0)).toBe(true);
+                expect(board._rowExists(0)).toBe(true);
 
             });
 
             it("last row exists", function () {
-                expect(board.rowExists(boardSize - 1)).toBe(true);
+                expect(board._rowExists(boardSize - 1)).toBe(true);
             });
 
             it("the number of rows is not larger than the board size", function () {
-                expect(board.rowExists(boardSize)).toBe(false);
+                expect(board._rowExists(boardSize)).toBe(false);
             });
         });
 
@@ -137,7 +137,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
 
             it("column 0 exists in first row", function () {
-                expect(board.columnExists(0)).toBe(true);
+                expect(board._columnExists(0)).toBe(true);
             });
 
             it("column 0 does not exist on empty board", function () {
@@ -145,7 +145,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
                 board = new Board(boardSize, boardSize);
 
-                expect(board.columnExists(0)).toBe(false);
+                expect(board._columnExists(0)).toBe(false);
             });
 
             it("the number of columns is not larger than the board size", function () {
@@ -153,8 +153,8 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
                 board = new Board(boardSize, boardSize);
 
-                expect(board.columnExists(boardSize - 1)).toBe(true);
-                expect(board.columnExists(boardSize)).toBe(false);
+                expect(board._columnExists(boardSize - 1)).toBe(true);
+                expect(board._columnExists(boardSize)).toBe(false);
             });
         });
 
