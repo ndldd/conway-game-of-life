@@ -54,7 +54,7 @@ define(
             this.init();
         };
 
-        App.prototype.createView = function (ViewConstructor, board, counter) {
+        App.prototype.createView = function (ViewConstructor) {
             var newView = new ViewConstructor(this.board, this.counter);
             this.view = newView;
             this.view.subscribe(this.board);
@@ -62,5 +62,4 @@ define(
         };
 
         return App;
-
     });

@@ -6,7 +6,7 @@ require.config({
          backbone: 'libs/backbone/backbone-min', // https://github.com/amdjs
          */
         // Require.js plugins
-        text: './text'
+        text: './vendor/text'
     }
 });
 

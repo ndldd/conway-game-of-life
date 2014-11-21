@@ -1,7 +1,7 @@
 define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants', 'text!src/views/canvasviewtemplate.html'], function (View, Counter, constants, canvasTemplate) {
     // tests specific to the canvas view
     describe("CanvasView,", function () {
-        describe("setting type properly on instantiation", function () {
+        describe("on instantiation sets type ", function () {
             var view;
 
             beforeEach(function () {
@@ -174,6 +174,4 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
             });
         });
     });
-
-
 });

@@ -4,14 +4,14 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
         var sumBoard; // helper function
         sumBoard = function (board) {
-                var flattened = board.reduce(function (a, b) {
-                    return a.concat(b);
-                });
+            var flattened = board.reduce(function (a, b) {
+                return a.concat(b);
+            });
 
-                return flattened.reduce(function (a, b) {
-                    return a + b;
-                });
-            };
+            return flattened.reduce(function (a, b) {
+                return a + b;
+            });
+        };
 
         beforeEach(function () {
             var boardSize = 44;
@@ -26,6 +26,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             beforeEach(function () {
                 board = new Board(rows, columns);
             });
+
             afterEach(function () {
                 board = null;
             });
@@ -58,35 +59,6 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 expect(all).toBe(0);
             });
 
-            describe("random board creation", function () {
-                var spy;
-
-                beforeEach(function () {
-                    spy = spyOn(Math, "random").and.returnValue(0.5);
-                });
-
-                describe('fake ones', function () {
-                    it("fills board with fake random ones", function () {
-                        expect(sumBoard(board.board)).toBe(0);
-
-                        board.makeRandom();
-
-                        expect(sumBoard(board.board)).toBe(rows * columns);
-                        expect(spy).toHaveBeenCalled();
-                    });
-                });
-
-                describe("fake zeros", function () {
-                    it("fills with fake random zeros", function () {
-                        Math.random.and.returnValue(0.4); // changing return value of spy
-
-                        board.makeRandom();
-
-                        expect(sumBoard(board.board)).toBe(0);
-                    });
-                });
-            });
-
             it('update with single value', function () {
                 expect(sumBoard(board.board)).toBe(0);
 
@@ -96,15 +68,45 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
         });
 
-        describe('accessing neighbours should not be allowed ', function () {
-            it('when board has size 0', function () {
+        describe("when creating a random board ", function () {
+            var spy;
+
+            beforeEach(function () {
+                spy = spyOn(Math, "random");
+            });
+
+            it(" board sets '1' randomly ", function () {
+                var rows = 15;
+                var columns = 16;
+                board = new Board(rows, columns);
+                expect(sumBoard(board.board)).toBe(0);
+
+                Math.random.and.returnValue(0.5);
+
+                board.makeRandom();  // all cells are 1
+
+                expect(sumBoard(board.board)).toBe(rows * columns);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("board sets '0' randomly ", function () {
+                Math.random.and.returnValue(0.4); // changing return value of spy
+
+                board.makeRandom();
+
+                expect(sumBoard(board.board)).toBe(0);
+            });
+        });
+
+        describe('when board has size 0', function () {
+            it('accessing neighbours should not be allowed ', function () {
                 board = new Board(0, 0);
 
                 expect(board.rowExists(0)).toBe(false);
             });
         });
 
-        describe('checking for rows', function () {
+        describe('when checking for rows', function () {
             var boardSize;
 
             beforeEach(function () {
@@ -121,14 +123,12 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 expect(board.rowExists(boardSize - 1)).toBe(true);
             });
 
-            it("last row + 1 does not exist", function () {
+            it("the number of rows is not larger than the board size", function () {
                 expect(board.rowExists(boardSize)).toBe(false);
             });
-
-
         });
 
-        describe("checking for columns", function () {
+        describe("when checking for columns", function () {
             var boardSize;
 
             beforeEach(function () {
@@ -148,7 +148,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 expect(board.columnExists(0)).toBe(false);
             });
 
-            it("column number  is not larger than board size", function () {
+            it("the number of columns is not larger than the board size", function () {
                 boardSize = 44;
 
                 board = new Board(boardSize, boardSize);
@@ -158,7 +158,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
         });
 
-        describe("getting list of neighbours", function () {
+        describe("when getting list of neighbours", function () {
 
             it("return [] if there are no neighbours", function () {
                 board = new Board(1, 1);
@@ -182,7 +182,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 expect(board.getNeighbours(0, 0)).toEqual([]);
             });
 
-            describe('cases with one neighbour', function () {
+            describe('cases with only one neighbour', function () {
                 it(" to the right", function () {
                     board.board = [
                         [1, 2]
@@ -241,7 +241,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 });
             });
 
-            describe("cases with 9 cells neighbours:", function () {
+            describe("cases with nine cell neighbours:", function () {
                 beforeEach(function () {
                     board.board = [
                         [1, 2, 3],
@@ -288,7 +288,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
         });
 
-        describe("making survival Calculations", function () {
+        describe("making survival calculations", function () {
             it("calculates survival for one cell", function () {
                 var outcome;
                 outcome = board.calculateCellSurvival();
@@ -363,7 +363,6 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
                     expect(board.board.length).toBe(boardHeight);
                     expect(board.board[0].length).toBe(boardWidth);
-
                 });
 
                 it("board sum should be different with new generation", function () {

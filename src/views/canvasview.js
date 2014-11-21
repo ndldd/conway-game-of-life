@@ -1,13 +1,3 @@
-/**
- *@fileOverview
- *@version 1.0
- *
- * @namespace conway.CanvasView
- * @constructor
- * @param {string} board - The title of the book.
- * @param {string} counter - The author of the book.
- * @param {string} canvasTemplate - The author of the book.
- */
 define(['text!./canvasviewtemplate.html', './view', '../conwayapp.constants'], function (canvasTemplate, View, constants) {
 
     var TILE_SIZE = constants.tileSize;

@@ -18,7 +18,7 @@ require.config({
 
 
     paths: {
-        text: "src/text"
+        text: "src/vendor/text"
     },
     // dynamically load all test files
     deps: allTestFiles,

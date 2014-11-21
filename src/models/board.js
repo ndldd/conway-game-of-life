@@ -158,6 +158,3 @@ define(function () {
 
     return Board;
 });
-
-
-

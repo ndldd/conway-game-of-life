@@ -1,9 +1,3 @@
-/**
- *@fileOverview
- *@version 1.0
- *
- * @namespace conway.view
- */
 define(['text!./viewtemplate.html'], function (htmlTemplate) {
 
     /**
