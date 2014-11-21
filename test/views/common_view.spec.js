@@ -158,7 +158,6 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     beforeEach(function () {
                         view = new View();
                         document.innerHTML = window.__html__['index.html'];
-
                     });
 
                     afterEach(function () {
@@ -170,28 +169,31 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         var btn = document.getElementById('start-btn');
 
                         expect(btn.innerHTML.toLowerCase()).toContain('start');
-
                     });
+
                     it("has a start button", function () {
                         var btn = document.getElementById('stop-btn');
 
                         expect(btn.innerHTML.toLowerCase()).toContain('stopp');
-
                     });
+
                     it("has a reset button", function () {
                         var btn = document.getElementById('reset-btn');
+
                         expect(btn.innerHTML.toLowerCase()).toContain('reset');
                     });
+
                     it("has a switchView button", function () {
                         var btn = document.getElementById('switchView-btn');
+
                         expect(btn.innerHTML.toLowerCase()).toContain('switch');
                     });
                 });
+
                 describe("displays counter", function () {
 
                     var counter;
                     beforeEach(function () {
-
                         counter = {
                             getCount: function () {
                                 return 0;
@@ -201,21 +203,19 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         document.innerHTML = window.__html__['index.html'];
 
                     });
+
                     it("adds #counter", function () {
-
-
                         view.addCounter();
 
                         var displayedCounter = document.getElementById("generationCounter");
 
                         expect(displayedCounter).not.toBeNull();
                     });
-                    it("counter shows a string", function () {
 
+                    it("counter shows a string", function () {
                         view.addCounter();
 
                         var displayedCounter = document.getElementById("generationCounter");
-
                         expect(displayedCounter.textContent).toBe('Generation: 0');
                     });
 
@@ -225,11 +225,9 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view.counter = counter;
 
                         view.addCounter();
+
                         expect(counter.getCount).toHaveBeenCalled();
-
                     });
-
-
                 });
 
                 describe("draws board (removes and displays new)", function () {
@@ -237,14 +235,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     var mockBoard;
 
                     beforeEach(function () {
-
                         document.innerHTML = window.__html__['index.html'];
                         view = new View();
                         mockBoard = [
                             [0, 0],
                             [0, 0]
                         ];
-
                     });
 
                     afterEach(function () {
@@ -257,6 +253,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                 });
                 describe("changes on board updates", function () {
                     var view;
+
                     beforeEach(function () {
                         view = new View();
                         document.innerHTML = window.__html__['index.html'];
@@ -267,49 +264,46 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view = null;
                         document.innerHTML = '';
                     });
+
                     it("removes old board", function () {
-
-
                         var htmlBoard;
                         view = new View([
                             [0],
                             [0]
                         ]);
                         view.displayBoard(view.board);
+
                         view.removeHtmlBoard();
 
                         htmlBoard = document.getElementById('board');
-
                         expect(htmlBoard.children.length).toBe(0);
 
                     });
 
-
                     it("updates it's counter", function () {
-
                         var htmlCounter;
                         var counter = new Counter();
                         view = new View({}, counter);
                         view.addCounter();
+
                         htmlCounter = document.getElementById('generationCounter');
                         expect(htmlCounter.textContent).toBe('Generation: 0');
 
                         view.counter._counter += 1;
                         view.updateCounterDisplay();
+
                         htmlCounter = document.getElementById('generationCounter');
-
                         expect(htmlCounter.textContent).toBe('Generation: 1');
-
                     });
+
                     it("view removes old counter Display", function () {
                         var view = new View({}, new Counter());
-
                         spyOn(view, 'removeCounterDisplay');
                         view.addCounter();
+
                         view.updateCounterDisplay();
+
                         expect(view.removeCounterDisplay).toHaveBeenCalled();
-
-
                     });
 
                     it("removes the old counter node", function () {
@@ -319,16 +313,12 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         view.removeCounterDisplay();
 
                         expect(document.getElementById('generationCounter')).toBe(null);
-
-
                     });
 
                     it("view adds new Counter Display", function () {
                         var counter = new Counter();
-
                         var view = new View({}, counter);
                         view.addCounter();
-
                         spyOn(view, 'addCounter');
 
                         view.updateCounterDisplay();
@@ -341,5 +331,6 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
     };
 
     runSuites(htmlView, Counter);
+
     runSuites(CanvasView, Counter, canvasViewTemplate);
 });

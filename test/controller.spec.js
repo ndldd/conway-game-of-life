@@ -1,19 +1,17 @@
 define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Controller, Counter, View) {
     var controller;
+
     beforeEach(function () {
         controller = new Controller();
     });
+
     describe('Controller', function () {
-
         describe("after instantiation ", function () {
-
             var controller, view;
             beforeEach(function () {
                 document.body.innerHTML = window.__html__['index.html'];
                 view = new View();
-
                 controller = jasmine.createSpyObj('controller', ['startSimulation', 'stopSimulation', 'resetSimulation']);
-
                 window.conway = {
                     controller: controller,
                     start: controller.startSimulation.bind(controller),
@@ -22,10 +20,10 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
                 };
             });
 
-
             describe("click events from the view are handled", function () {
                 it("on start", function () {
                     var startButton = document.getElementById('start-btn');
+
                     startButton.onclick();
 
                     expect(controller.startSimulation).toHaveBeenCalled();
@@ -33,6 +31,7 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
 
                 it("on stop", function () {
                     var button = document.getElementById('stop-btn');
+
                     button.onclick();
 
                     expect(controller.stopSimulation).toHaveBeenCalled();
@@ -40,16 +39,16 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
 
                 it("on reset", function () {
                     var button = document.getElementById('reset-btn');
+
                     button.onclick();
 
                     expect(controller.resetSimulation).toHaveBeenCalled();
                 });
-
-
             });
 
             describe("messages simRunner to ", function () {
                 var simRunner;
+
                 beforeEach(function () {
                     simRunner = jasmine.createSpyObj('simRunner', ['start', 'stop', 'reset']);
                     controller = new Controller(null, simRunner);
@@ -65,19 +64,20 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
                     controller.stopSimulation();
 
                     expect(simRunner.stop).toHaveBeenCalled();
-
                 });
 
                 it("reset simulation", function () {
                     controller.resetSimulation();
                     expect(simRunner.reset).toHaveBeenCalled();
                 });
-
             });
+
             describe("when collaborating", function () {
+
                 beforeEach(function () {
                     controller = new Controller();
                 });
+
                 it("sets View", function () {
 
                     var newView = {draw: function () { }};
@@ -87,33 +87,35 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
                     expect(controller.view).toBe(newView);
                 });
             });
-
         });
+
         describe("on set View", function () {
             var view;
+
             it("messages to draw the new view", function () {
                 view = {draw: jasmine.createSpy('spy')};
 
                 controller.setView(view);
 
                 expect(view.draw).toHaveBeenCalled();
-
             });
+
             it("has a reference to new view", function () {
                 view = {draw: function () {
                 }};
                 controller.view = null;
 
                 controller.setView(view);
+
                 expect(controller.view).not.toBeNull();
             });
         });
 
         describe('tells view to add Counter', function () {
-
             var controller;
             var counter;
             var view;
+
             beforeEach(function () {
 
                 counter = new Counter();
@@ -122,43 +124,33 @@ define([ 'src/controller', 'src/models/counter', 'src/views/view'], function (Co
             });
 
             it('adds counter', function () {
-
                 spyOn(view, 'addCounter');
+
                 controller.displayCounter();
 
                 expect(view.addCounter).toHaveBeenCalled();
-
             });
+
             it("adds counter on init", function () {
                 view = new View();
-
                 spyOn(view, 'addCounter');
+
                 controller = new Controller(counter, {}, view);
+
                 expect(view.addCounter).toHaveBeenCalled();
-
             });
-
-
         });
 
-
         describe('after click on stop', function () {
-
-
             it("stops sim runner on stop event", function () {
-
-
                 var simRunner = { stop: { } };
-
                 controller = new Controller(null, simRunner);
                 spyOn(simRunner, 'stop');
 
                 controller.stopSimulation();
+
                 expect(simRunner.stop).toHaveBeenCalled();
-
             });
-
         });
     });
-
 });

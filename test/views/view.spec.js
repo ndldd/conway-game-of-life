@@ -1,10 +1,6 @@
 define(['src/views/view', 'src/models/counter'], function (View, Counter) {
-
-    // test specific to the html-div version of the view only
-
-
+    // tests that are specific to the html-div version of the view only
     describe('View', function () {
-
         var view;
 
         beforeEach(function () {
@@ -17,23 +13,18 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
             document.innerHTML = '';
         });
 
-
         describe(' after instantiation', function () {
-
-
             describe("draws board (removes and displays new)", function () {
                 var view;
                 var mockBoard;
 
                 beforeEach(function () {
-
                     document.innerHTML = window.__html__['index.html'];
                     view = new View();
                     mockBoard = [
                         [0, 0],
                         [0, 0]
                     ];
-
                 });
 
                 afterEach(function () {
@@ -44,14 +35,13 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                 describe('drawing', function () {
                     it('board is not empty', function () {
-
                         var board;
+
                         view.displayBoard(mockBoard);
+
                         board = document.getElementById('board');
                         expect(board.innerHTML.trim()).not.toEqual('');
-
                     });
-
                 });
 
                 it('draws board with two rows', function () {
@@ -67,7 +57,6 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     expect(board.children.length).toBe(2);
                     expect(board.children[0].className).toBe('row');
                     expect(board.children[1].className).toBe('row');
-
                 });
 
                 it('rows have tiles', function () {
@@ -81,10 +70,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                     board = document.getElementById('board');
                     expect(board.children[0].children.length).toBe(2);
-
                     expect(board.children[0].children[0].className).toBe('tile');
-
-
                 });
 
                 it('tiles have ".on" when their state is 1', function () {
@@ -97,26 +83,22 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     view.displayBoard(mockBoard);
 
                     board = document.getElementById('board');
-
-
                     expect(board.children[0].children[0].className).toBe('tile on');
-
                 });
-
             });
+
             describe("changes on board updates", function () {
                 var view;
+
                 beforeEach(function () {
                     view = new View();
                     document.innerHTML = window.__html__['index.html'];
-
                 });
 
                 afterEach(function () {
                     view = null;
                     document.innerHTML = '';
                 });
-
 
                 it("redraws ", function () {
                     var htmlBoard;
@@ -125,7 +107,6 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                         [0, 0],
                         [0, 0]
                     ], new Counter());
-
                     newBoard = [
                         [1, 1],
                         [1, 1]
@@ -134,35 +115,23 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
                     view.displayBoard(view.board);
                     view.board.board = newBoard;
-
                     view.draw();
 
-
                     htmlBoard = document.getElementById('board');
-
-
                     expect(htmlBoard.children[0].children[0].className).toBe('tile on');
-
                 });
-
-
             });
+
             describe("on draw ", function () {
                 it("updates the counter", function () {
-
                     view.board = {};
                     spyOn(view, 'updateCounterDisplay');
+
                     view.draw();
 
                     expect(view.updateCounterDisplay).toHaveBeenCalled();
-
                 });
             });
-
         });
-
-
     });
-
-
 });

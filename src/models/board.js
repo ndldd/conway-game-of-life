@@ -74,7 +74,6 @@ define(function () {
     };
 
     Board.prototype.rowExists = function (rowNumber) {
-
         if (typeof (this.board[rowNumber]) === 'undefined') {
             return false;
         } else {
@@ -158,7 +157,6 @@ define(function () {
     };
 
     return Board;
-
 });
 
 
