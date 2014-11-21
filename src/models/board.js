@@ -90,52 +90,41 @@ define(function () {
     };
 
     Board.prototype.addRightNeighbour = function (x, y, neighbours) {
-            if (this.columnExists(y + 1)) {
-                neighbours.push(this.board[x][y + 1]);
-            }
-        };
+        if (this.columnExists(y + 1)) {
+            neighbours.push(this.board[x][y + 1]);
+        }
+    };
 
     Board.prototype.addLeftNeighbour = function (x, y, neighbours) {
-            if (this.columnExists(y - 1)) {
-                neighbours.push(this.board[x][y - 1]);
-            }
-        };
+        if (this.columnExists(y - 1)) {
+            neighbours.push(this.board[x][y - 1]);
+        }
+    };
 
-    Board.prototype.collectRow = function  (x, y, centerRow) {
+    Board.prototype.collectRow = function (x, y, centerRow) {
 
-            neighbours = [];
-            if (this.rowExists(x)) {
-                this.addLeftNeighbour(x, y, neighbours);
-                if (x !== centerRow) {
-                    neighbours.push(this.board[x][y]);
-                }
-                this.addRightNeighbour(x, y, neighbours);
+        var neighbours = [];
+        if (this.rowExists(x)) {
+            this.addLeftNeighbour(x, y, neighbours);
+            if (x !== centerRow) {
+                neighbours.push(this.board[x][y]);
             }
-            return neighbours;
-        };
+            this.addRightNeighbour(x, y, neighbours);
+        }
+        return neighbours;
+    };
 
     Board.prototype.getNeighbours = function (x, y) {
 
         if (!this.columnExists(y) || !this.rowExists(x)) {
             return undefined;
         }
-
-        var neighbours = [];
-
         var all = [];
-
-        //all.concat(this.collectRow(x - 1, y, x, neighbours));
-        //all.concat(this.collectRow(x  , y, x, neighbours));
-        //all.concat(this.collectRow(x + 1, y, x, neighbours));
-        //
-        all = all.concat(this.collectRow(x -1, y, x, neighbours));
-        all = all.concat(this.collectRow(x , y, x, neighbours));
-        all = all.concat(this.collectRow(x +1, y, x, neighbours));
-        //this.collectRow(x, y, x, neighbours);
-        //this.collectRow(x + 1, y, x, neighbours);
+        all = all.concat(this.collectRow(x - 1, y, x));
+        all = all.concat(this.collectRow(x, y, x));
+        all = all.concat(this.collectRow(x + 1, y, x));
 
         return all;
-        //return all;
     };
 
 
