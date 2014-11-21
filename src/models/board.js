@@ -90,37 +90,44 @@ define(function () {
     };
 
     Board.prototype.getNeighbours = function (x, y) {
-        var neighbours = [];
+        var collectRow;
+        var addRightNeighbour;
+        var addLeftNeighbour;
+
         if (!this.columnExists(y) || !this.rowExists(x)) {
             return undefined;
         }
-        // row above current cell
-        if (this.rowExists(x - 1)) {
+
+        addLeftNeighbour = function (x, y) {
             if (this.columnExists(y - 1)) {
-                neighbours.push(this.board[x - 1][y - 1]);
+                neighbours.push(this.board[x][y - 1]);
             }
-            neighbours.push(this.board[x - 1][y]);
+        }.bind(this);
+
+        addRightNeighbour = function (x, y) {
             if (this.columnExists(y + 1)) {
-                neighbours.push(this.board[x - 1][y + 1]);
+                neighbours.push(this.board[x][y + 1]);
             }
-        }
-        // same row (excluding cell itself)
-        if (this.columnExists(y - 1)) {
-            neighbours.push(this.board[x][y - 1]);
-        }
-        if (this.columnExists(y + 1)) {
-            neighbours.push(this.board[x][y + 1]);
-        }
-        // row below current cell
-        if (this.rowExists(x + 1)) {
-            if (this.columnExists(y - 1)) {
-                neighbours.push(this.board[x + 1][y - 1]);
+        }.bind(this);
+
+        collectRow= function (x, y, centerRow) {
+            if (this.rowExists(x)) {
+                addLeftNeighbour(x, y);
+                if (x !== centerRow) {
+                    neighbours.push(this.board[x][y]);
+                }
+                addRightNeighbour(x, y);
             }
-            neighbours.push(this.board[x + 1][y]);
-            if (this.columnExists(y + 1)) {
-                neighbours.push(this.board[x + 1][y + 1]);
-            }
-        }
+        }.bind(this);
+
+
+        var neighbours = [];
+
+
+        collectRow(x - 1, y, x);
+        collectRow(x, y, x);
+        collectRow(x + 1, y, x);
+
         return neighbours;
     };
 
