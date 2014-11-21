@@ -22,8 +22,8 @@ define(
         App.prototype.init = function () {
             // create models
             var counter = this.counter = new Counter();
-            this.board = new Board(DEFAULT_SIZE, DEFAULT_SIZE, counter);
-            var simRunner = new SimRunner(this.board);
+            this._board = new Board(DEFAULT_SIZE, DEFAULT_SIZE, counter);
+            var simRunner = new SimRunner(this._board);
             this.view = this.createView(CanvasView);
             this.currentView = 'CanvasView';
             this.controller = new Controller(counter, simRunner, this.view);
@@ -55,9 +55,9 @@ define(
         };
 
         App.prototype.createView = function (ViewConstructor) {
-            var newView = new ViewConstructor(this.board, this.counter);
+            var newView = new ViewConstructor(this._board, this.counter);
             this.view = newView;
-            this.view.subscribe(this.board);
+            this.view.subscribe(this._board);
             return newView;
         };
 

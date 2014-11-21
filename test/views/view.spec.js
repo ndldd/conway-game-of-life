@@ -14,7 +14,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
         });
 
         describe(' after instantiation', function () {
-            describe("draws board (removes and displays new)", function () {
+            describe("draws _board (removes and displays new)", function () {
                 var view;
                 var mockBoard;
 
@@ -34,7 +34,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                 });
 
                 describe('drawing', function () {
-                    it('board is not empty', function () {
+                    it('_board is not empty', function () {
                         var board;
 
                         view.displayBoard(mockBoard);
@@ -44,7 +44,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     });
                 });
 
-                it('draws board with two rows', function () {
+                it('draws _board with two rows', function () {
                     var board;
                     mockBoard = [
                         [0, 0],
@@ -87,7 +87,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                 });
             });
 
-            describe("changes on board updates", function () {
+            describe("changes on _board updates", function () {
                 var view;
 
                 beforeEach(function () {
@@ -113,8 +113,8 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
                     ];
                     view.addCounter();
 
-                    view.displayBoard(view.board);
-                    view.board.board = newBoard;
+                    view.displayBoard(view._board);
+                    view._board._board = newBoard;
                     view.draw();
 
                     htmlBoard = document.getElementById('board');
@@ -124,7 +124,7 @@ define(['src/views/view', 'src/models/counter'], function (View, Counter) {
 
             describe("on draw ", function () {
                 it("updates the counter", function () {
-                    view.board = {};
+                    view._board = {};
                     spyOn(view, 'updateCounterDisplay');
 
                     view.draw();

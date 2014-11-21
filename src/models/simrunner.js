@@ -2,7 +2,7 @@ define(['../conwayapp.constants'],function (constants) {
 
 
     var SimRunner = function (board) {
-        this.board = board;
+        this._board = board;
         this.halt = false;
         this.stepDuration = constants.stepDuration;
     };
@@ -14,11 +14,11 @@ define(['../conwayapp.constants'],function (constants) {
 
     SimRunner.prototype.run = function () {
         if (! this.started){
-            this.board.makeRandom();
+            this._board.makeRandom();
             this.started=true;
         }
         if (!this.halt) {
-        this.board.makeNextGeneration();
+        this._board.makeNextGeneration();
             window.setTimeout(function () {
                 this.run();
             }.bind(this), this.stepDuration);
@@ -30,7 +30,7 @@ define(['../conwayapp.constants'],function (constants) {
     };
 
     SimRunner.prototype.reset = function () {
-        this.board.makeRandom();
+        this._board.makeRandom();
     };
 
     return SimRunner;

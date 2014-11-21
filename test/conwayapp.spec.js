@@ -23,17 +23,17 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
 
                 expect(app.controller).toBeDefined();
                 expect(app.controller.simRunner).toBeDefined();
-                expect(app.controller.simRunner.board).toBeDefined();
+                expect(app.controller.simRunner._board).toBeDefined();
                 expect(app.controller.view).toBeDefined();
 
             });
 
-            it('init board ', function () {
-                expect(app.board).toBeUndefined();
+            it('init _board ', function () {
+                expect(app._board).toBeUndefined();
 
                 app.init();
 
-                expect(app.board).toBeDefined();
+                expect(app._board).toBeDefined();
 
             });
 
@@ -49,7 +49,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
 
                     expect(app.view).toBeDefined();
                     expect(app.view.counter).toBeDefined();
-                    expect(app.view.board).toBeDefined();
+                    expect(app.view._board).toBeDefined();
                 });
 
                 it("remembers the current View type", function () {
@@ -98,7 +98,7 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
             var view;
 
             beforeEach(function () {
-                app.board = {addSubscriber: function () { }};
+                app._board = {addSubscriber: function () { }};
             });
 
             it("createView when passed a View constructor returns a View ", function () {
@@ -188,8 +188,8 @@ define(['require' , 'src/conwayapp' , 'src/views/view', 'src/views/canvasview', 
                 expect(app.view.counter).toBeDefined();
             });
 
-            it("counter to board", function () {
-                expect(app.board.counter).toBeDefined();
+            it("counter to _board", function () {
+                expect(app._board.counter).toBeDefined();
             });
         });
     });

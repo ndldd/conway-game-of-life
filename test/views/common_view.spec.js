@@ -2,8 +2,8 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
 
     // tests for both the html-div view and its subclass the canvas view
     var runSuites = function (View, Counter) {
-        describe("view adds a #board element on init", function () {
-            it('has a #board', function () {
+        describe("view adds a #_board element on init", function () {
+            it('has a #_board', function () {
                 var board;
                 var view;
                 document.innerHTML = window.__html__['index.html'];
@@ -44,7 +44,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     expect(container).toBeDefined();
                 });
 
-                it('adds board', function () {
+                it('adds _board', function () {
                     var board = document.getElementById('board');
 
                     expect(board).toBeDefined();
@@ -55,7 +55,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                 describe('on subscribe adds itself to Board observers', function () {
                     var view;
 
-                    it('calls board.addSubscriber', function () {
+                    it('calls _board.addSubscriber', function () {
                         view = new View();
                         var newBoard = {
                             addSubscriber: function () {
@@ -115,7 +115,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     it("removes itself from the container", function () {
                         container = document.getElementById('view-container');
                         expect(container.innerHTML).not.toBe('');
-                        view.board = {
+                        view._board = {
                             removeSubscriber: function () {
                             }
                         };
@@ -128,23 +128,23 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
 
                     it("unsubscribes from model changes", function () {
                         spyOn(view, 'unsubscribe');
-                        view.board = {};
+                        view._board = {};
 
                         view.destroy();
 
-                        expect(view.unsubscribe).toHaveBeenCalledWith(view.board);
+                        expect(view.unsubscribe).toHaveBeenCalledWith(view._board);
                     });
                 });
 
                 describe("on unsubscribe", function () {
-                    it("calls board.removeSubscriber with the saved callback reference", function () {
-                        view.board = {removeSubscriber: jasmine.createSpy('spy', 'removeSubscriber')};
+                    it("calls _board.removeSubscriber with the saved callback reference", function () {
+                        view._board = {removeSubscriber: jasmine.createSpy('spy', 'removeSubscriber')};
                         var callback = view.registeredCallback = function () {
                         };
 
-                        view.unsubscribe(view.board);
+                        view.unsubscribe(view._board);
 
-                        expect(view.board.removeSubscriber).toHaveBeenCalledWith(callback);
+                        expect(view._board.removeSubscriber).toHaveBeenCalledWith(callback);
                     });
                 });
 
@@ -223,7 +223,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
                 });
 
-                describe("draws board (removes and displays new)", function () {
+                describe("draws _board (removes and displays new)", function () {
                     var view;
                     var mockBoard;
 
@@ -243,7 +243,7 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                     });
                 });
 
-                describe("changes on board updates", function () {
+                describe("changes on _board updates", function () {
                     var view;
 
                     beforeEach(function () {
@@ -256,13 +256,13 @@ define(['src/views/view', 'src/models/counter', 'src/views/canvasview', 'text!sr
                         document.innerHTML = '';
                     });
 
-                    it("removes old board", function () {
+                    it("removes old _board", function () {
                         var htmlBoard;
                         view = new View([
                             [0],
                             [0]
                         ]);
-                        view.displayBoard(view.board);
+                        view.displayBoard(view._board);
 
                         view.removeHtmlBoard();
 

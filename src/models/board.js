@@ -20,7 +20,7 @@ define(function () {
                 newBoard.push(arr);
             }
             if (typeof nextGeneration === 'undefined') {
-                this.board = newBoard;
+                this._board = newBoard;
             }
             else if (nextGeneration) {
                 this.nextGeneration = newBoard;
@@ -32,7 +32,7 @@ define(function () {
 
     Board.prototype.makeRandom = function () {
         //var row;
-        this.board = [];
+        this._board = [];
         //row = new Array(this.columns);
         var arr, j;
         for (var i = 0; i < this.rows; i++) {
@@ -41,7 +41,7 @@ define(function () {
             while (j--) {
                 arr[j] = Math.floor(Math.random() * 2);      // 1 or 0
             }
-            this.board.push(arr);
+            this._board.push(arr);
         }
         if (this.counter) {
             this.counter.reset();
@@ -51,8 +51,8 @@ define(function () {
 
     Board.prototype.makeNextGeneration = function () {
         this.init(this.rows, this.columns, true);
-        this.board.map(this.calculateRowSurvival, this);
-        this.board = this.nextGeneration;
+        this._board.map(this.calculateRowSurvival, this);
+        this._board = this.nextGeneration;
         if (this.counter) {
             this.counter.add();
         }
@@ -74,7 +74,7 @@ define(function () {
     };
 
     Board.prototype._rowExists = function (rowNumber) {
-        if (typeof (this.board[rowNumber]) === 'undefined') {
+        if (typeof (this._board[rowNumber]) === 'undefined') {
             return false;
         } else {
             return true;
@@ -82,22 +82,22 @@ define(function () {
     };
 
     Board.prototype._columnExists = function (colNumber) {
-        return (typeof(this.board[0]) !== 'undefined' && typeof(this.board[0][colNumber]) !== 'undefined');
+        return (typeof(this._board[0]) !== 'undefined' && typeof(this._board[0][colNumber]) !== 'undefined');
     };
 
     Board.prototype.setValue = function (value, x, y) {
-        this.board[x][y] = value;
+        this._board[x][y] = value;
     };
 
     Board.prototype._addRightNeighbour = function (x, y, neighbours) {
         if (this._columnExists(y + 1)) {
-            neighbours.push(this.board[x][y + 1]);
+            neighbours.push(this._board[x][y + 1]);
         }
     };
 
     Board.prototype._addLeftNeighbour = function (x, y, neighbours) {
         if (this._columnExists(y - 1)) {
-            neighbours.push(this.board[x][y - 1]);
+            neighbours.push(this._board[x][y - 1]);
         }
     };
 
@@ -107,7 +107,7 @@ define(function () {
         if (this._rowExists(x)) {
             this._addLeftNeighbour(x, y, neighbours);
             if (x !== centerRow) {
-                neighbours.push(this.board[x][y]);
+                neighbours.push(this._board[x][y]);
             }
             this._addRightNeighbour(x, y, neighbours);
         }

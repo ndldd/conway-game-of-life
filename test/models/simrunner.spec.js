@@ -2,13 +2,13 @@ define(['src/models/simrunner', 'src/conwayapp.constants'], function (SimRunner,
     describe('SimRunner', function () {
         describe('on initialization, ', function () {
             var runner;
-            it("sets board and step duration", function () {
+            it("sets _board and step duration", function () {
                 var board = {};
 
                 runner = new SimRunner(board);
 
                 expect(runner).toBeDefined();
-                expect(runner.board).toBeDefined();
+                expect(runner._board).toBeDefined();
                 expect(runner.stepDuration).toBeDefined();
             });
         });
@@ -38,7 +38,7 @@ define(['src/models/simrunner', 'src/conwayapp.constants'], function (SimRunner,
                 board.makeNextGeneration.calls.reset();
             });
 
-            it("on start calls its board", function () {
+            it("on start calls its _board", function () {
                 runner = new SimRunner(board);
 
                 runner.start();
@@ -97,7 +97,7 @@ define(['src/models/simrunner', 'src/conwayapp.constants'], function (SimRunner,
                 expect(board.makeNextGeneration.calls.count()).toEqual(3);
             });
 
-            it("on reset makes a random board", function () {
+            it("on reset makes a random _board", function () {
                 spyOn(board, 'makeRandom');
 
                 runner.reset();

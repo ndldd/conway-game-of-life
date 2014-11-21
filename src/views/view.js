@@ -17,7 +17,7 @@ define(['text!./viewtemplate.html'], function (htmlTemplate) {
         container.appendChild(div);
 
         if (board) {
-            this.board = board;
+            this._board = board;
         }
         if (counter) {
             this.counter = counter;
@@ -52,7 +52,7 @@ define(['text!./viewtemplate.html'], function (htmlTemplate) {
 
     View.prototype.draw = function () {
         this.removeHtmlBoard();
-        this.displayBoard(this.board.board);
+        this.displayBoard(this._board._board);
         this.updateCounterDisplay();
     };
 
@@ -68,7 +68,7 @@ define(['text!./viewtemplate.html'], function (htmlTemplate) {
 
     View.prototype.destroy = function () {
         var container = document.getElementById('view-container').innerHTML = "";
-        this.unsubscribe(this.board);
+        this.unsubscribe(this._board);
         container.innerHTML = "";
     };
 

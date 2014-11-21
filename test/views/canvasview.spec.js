@@ -50,7 +50,7 @@ define(['src/views/canvasview', 'src/models/counter', 'src/conwayapp.constants',
                 expect(view.drawBoardBackground).toHaveBeenCalled();
             });
 
-            it("gets dimensions from the board", function () {
+            it("gets dimensions from the _board", function () {
                 var board = [
                     [1, 1],
                     [1, 1],

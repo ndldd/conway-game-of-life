@@ -31,22 +31,22 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 board = null;
             });
 
-            it('has a board', function () {
-                expect(board.board).toBeDefined();
+            it('has a _board', function () {
+                expect(board._board).toBeDefined();
             });
 
             it("has rows ", function () {
-                expect(board.board.length).toBe(rows);
+                expect(board._board.length).toBe(rows);
             });
 
             it("has columns", function () {
-                expect(board.board[0].length).toBe(columns);
-                expect(board.board[rows - 1].length).toBe(columns);
+                expect(board._board[0].length).toBe(columns);
+                expect(board._board[rows - 1].length).toBe(columns);
             });
 
             it('all values are zero', function () {
                 var all;
-                var flattened = board.board.reduce(function (a, b) {
+                var flattened = board._board.reduce(function (a, b) {
                     return a.concat(b);
                 });
 
@@ -60,45 +60,45 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
 
             it('update with single value', function () {
-                expect(sumBoard(board.board)).toBe(0);
+                expect(sumBoard(board._board)).toBe(0);
 
                 board.setValue(3, 0, 0);
 
-                expect(sumBoard(board.board)).toBe(3);
+                expect(sumBoard(board._board)).toBe(3);
             });
         });
 
-        describe("when creating a random board ", function () {
+        describe("when creating a random _board ", function () {
             var spy;
 
             beforeEach(function () {
                 spy = spyOn(Math, "random");
             });
 
-            it(" board sets '1' randomly ", function () {
+            it(" _board sets '1' randomly ", function () {
                 var rows = 15;
                 var columns = 16;
                 board = new Board(rows, columns);
-                expect(sumBoard(board.board)).toBe(0);
+                expect(sumBoard(board._board)).toBe(0);
 
                 Math.random.and.returnValue(0.5);
 
                 board.makeRandom();  // all cells are 1
 
-                expect(sumBoard(board.board)).toBe(rows * columns);
+                expect(sumBoard(board._board)).toBe(rows * columns);
                 expect(spy).toHaveBeenCalled();
             });
 
-            it("board sets '0' randomly ", function () {
+            it("_board sets '0' randomly ", function () {
                 Math.random.and.returnValue(0.4); // changing return value of spy
 
                 board.makeRandom();
 
-                expect(sumBoard(board.board)).toBe(0);
+                expect(sumBoard(board._board)).toBe(0);
             });
         });
 
-        describe('when board has size 0', function () {
+        describe('when _board has size 0', function () {
             it('accessing neighbours should not be allowed ', function () {
                 board = new Board(0, 0);
 
@@ -166,7 +166,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 expect(board.getNeighbours(0, 0)).toEqual([]);
             });
 
-            it('return undefined if the position is not on the board', function () {
+            it('return undefined if the position is not on the _board', function () {
                 board = new Board(0, 0);
 
                 expect(board.getNeighbours(0, 0)).toBe(undefined);
@@ -184,7 +184,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
             describe('cases with only one neighbour', function () {
                 it(" to the right", function () {
-                    board.board = [
+                    board._board = [
                         [1, 2]
                     ];
 
@@ -192,7 +192,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 });
 
                 it(' below', function () {
-                    board.board = [
+                    board._board = [
                         [1],
                         [2]
                     ];
@@ -200,7 +200,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                     expect(board.getNeighbours(0, 0)).toEqual([2]);
                 });
                 it("on the top", function () {
-                    board.board = [
+                    board._board = [
                         [1],
                         [2]
                     ];
@@ -208,7 +208,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                     expect(board.getNeighbours(1, 0)).toEqual([1]);
                 });
                 it("on the left", function () {
-                    board.board = [
+                    board._board = [
                         [1, 2]
                     ];
                     expect(board.getNeighbours(0, 1)).toEqual([1]);
@@ -218,7 +218,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             describe("cases with three neighbours", function () {
 
                 beforeEach(function () {
-                    board.board = [
+                    board._board = [
                         [1, 2],
                         [3, 4]
                     ];
@@ -243,7 +243,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
 
             describe("cases with nine cell neighbours:", function () {
                 beforeEach(function () {
-                    board.board = [
+                    board._board = [
                         [1, 2, 3],
                         [4, 5, 6],
                         [7, 8, 9]
@@ -348,8 +348,8 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
         });
 
-        describe('applying survival function to board', function () {
-            describe("return a new board ", function () {
+        describe('applying survival function to _board', function () {
+            describe("return a new _board ", function () {
                 var boardHeight = 5;
                 var boardWidth = 4;
                 var board;
@@ -361,28 +361,28 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
                 it("has same dimensions", function () {
                     board.makeNextGeneration();
 
-                    expect(board.board.length).toBe(boardHeight);
-                    expect(board.board[0].length).toBe(boardWidth);
+                    expect(board._board.length).toBe(boardHeight);
+                    expect(board._board[0].length).toBe(boardWidth);
                 });
 
-                it("board sum should be different with new generation", function () {
+                it("_board sum should be different with new generation", function () {
                     var after;
                     var before;
                     var boardHeight = 3;
                     var boardWidth = 3;
                     board = new Board(boardHeight, boardWidth);
-                    board.board = [
+                    board._board = [
                         [1, 0, 1],
                         [0, 0, 1],
                         [0, 1, 0]
                     ];
-                    before = sumBoard(board.board);
+                    before = sumBoard(board._board);
 
                     expect(before).toBe(4);
 
                     board.makeNextGeneration();
 
-                    after = sumBoard(board.board);
+                    after = sumBoard(board._board);
                     expect(after).not.toEqual(before);
                 });
 
@@ -424,7 +424,7 @@ define(['src/models/board', 'src/models/counter'], function (Board) {
             });
         });
 
-        describe("when updating the board,", function () {
+        describe("when updating the _board,", function () {
             describe("notifies subscribers", function () {
                 var spy;
                 var board;
