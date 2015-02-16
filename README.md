@@ -8,15 +8,9 @@ When the board is updated the survival for each cell is calculated and the next 
  [details on the rules ] (http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
  
  
-## About this demo project:
+## Implementation details:
 
-The MVC pattern was used to decouple the application modules. 
-test-driven development and of a framework that provides dependency injection like AngularJS.
-In this implementation you can switch between a "classic HTMLView" (which uses Div elements) and a "CanvasView" which uses the HTML5 canvas element to represent the cells.
-
-
-
-### View classes: CanvasView and HtmlView:
+* You can switch between a "classic HTMLView" (which uses Div elements) and a "CanvasView" which uses the HTML5 canvas element to represent the cells.
 * CanvasView is a subclass of the HtmlView and has the same API as its parent. 
 * The view classes have their own templates and handle all the DOM manipulations
 * The CanvasView class overrides only the methods for drawing the board.
@@ -24,19 +18,17 @@ In this implementation you can switch between a "classic HTMLView" (which uses D
  
     
 ### Model classes and their responsibilities:
-* the model classes are decoupled from the view: When switching the view the model instances are not affected
 * board: Wraps a two dimensional array that represents the current generation in the conway world, calculates the next Generation
 * simRunner: times the generations 
 * counter: Counts the Generations
 
-
 ### Controller:
-* acts as a mediator; handles commands from the views (button presses) and configures simRunner
+* acts as a mediator; handles button presses and configures simRunner
 
 ### App Class:
 * Acts as a builder that instantiates the classes and connects them.
 
-* RequireJS is used to modularize and namespace the app and to load the dependencies.
+* RequireJS is used to namespace the app and to load the dependencies.
 * the Jasmine test framework is used together with the karma-test runner for unit testing
 
 
