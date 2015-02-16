@@ -1,0 +1,54 @@
+// colors for html-view
+@buttonColor: #ffe113;
+@buttonBorder: orange;
+
+
+// colors for canvas view
+@buttonColorHtml: green;
+@buttonBorderHtml: darkgreen;
+
+
+// common for both views:
+.board-controls {
+  margin: 10px;
+}
+
+button {
+
+  background-color: @buttonColor;
+  //  border: #ffff00;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid;
+  border-color: @buttonBorder;
+  border-radius: 3px;
+
+  &:hover {
+
+    background-color: lighten(@buttonColor, 25%);
+    border-color: lighten(@buttonBorder, 25%);
+
+
+
+  }
+}
+
+// specific for html-view
+
+div.html-controls > button {
+  background-color: @buttonColorHtml;
+  border-color: @buttonBorderHtml;
+
+  color: #ffffff;
+  &:hover {
+    background-color: lighten(@buttonColorHtml, 25%);
+    border-color: lighten(@buttonBorderHtml, 25%);
+    color: #000000;
+  }
+}
+
+div.board {
+  margin: 15px;
+}

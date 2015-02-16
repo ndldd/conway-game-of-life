@@ -1,0 +1,57 @@
+@tileSize: 5px;
+@board-width: @tileSize * 150;
+
+body {
+  //  line-height: 3px ;
+}
+
+#generationCounter {
+  //  line-height: 20px;
+}
+
+div.row {
+  //  display: inline-block;
+}
+
+.board {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.board {
+  line-height: 3px;
+  align: center;
+  min-width: @board-width;
+  border: 2px;
+  display: block;
+
+
+}
+
+canvas.board {
+  margin-top: 10px;
+  display: block;
+
+}
+
+.tile {
+
+  height: @tileSize;
+  width: @tileSize;
+  border: 1px solid lightgrey;
+  display: inline-block;
+
+}
+
+div.on {
+  .tile;
+  background-color: black;
+  border-color: gray;
+
+}
+
+div.off {
+  .tile;
+  background-color: white;
+  border-color: lightgrey;
+}

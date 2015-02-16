@@ -1,0 +1,8 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+#
+node_modules/*
+.idea/workspace.xml
+.idea/workspace.xml
+.idea/
+package.json~

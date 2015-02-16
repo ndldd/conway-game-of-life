@@ -1,0 +1,30 @@
+.board-controls {
+  margin: 10px;
+}
+button {
+  background-color: #ffe113;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px solid;
+  border-color: #ffa500;
+  border-radius: 3px;
+}
+button:hover {
+  background-color: #fff193;
+  border-color: #ffd280;
+}
+div.html-controls > button {
+  background-color: #008000;
+  border-color: #006400;
+  color: #ffffff;
+}
+div.html-controls > button:hover {
+  background-color: #00ff00;
+  border-color: #00e300;
+  color: #000000;
+}
+div.board {
+  margin: 15px;
+}
